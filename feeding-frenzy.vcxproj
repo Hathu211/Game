@@ -130,7 +130,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Fish.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="const.h" />
+    <ClInclude Include="Fish.h" />
+    <ClInclude Include="Game.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\back.png" />
+    <Image Include="assets\fishRight.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
