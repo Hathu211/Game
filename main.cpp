@@ -1,0 +1,8 @@
+#include <iostream>
+#include <SDL.h>
+using namespace std;
+int main(int argc, char* argv[]) {
+	cout << "Hello Kitty!";
+	return 0;
+}
+//fhjfhd
