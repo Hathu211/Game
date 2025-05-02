@@ -9,7 +9,7 @@ class Background {
 	SDL_Rect camera; 
 	int backgroundWidth, backgroundHeight; 
 public:
-	Background(SDL_Renderer* renderer, int width, int height, const char* imagePath = "assets/back.png"); 
+	Background(SDL_Renderer* renderer, int width, int height, const char* imagePath = "assets/nen.png"); 
 	void updateCamera(const SDL_Rect& playerRect); 
 	SDL_Rect getCamera() const {
 		return camera; 

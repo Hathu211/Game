@@ -7,28 +7,16 @@
       "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\fishAI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:fishAI.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\FishAI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:FishAI.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Game.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Fish.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Fish.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\assets\\back.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
-      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:assets\\back.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\const.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:const.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Fish.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Fish.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Background.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Background.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Background.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -37,6 +25,34 @@
     {
       "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Fish.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Fish.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Fish.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Fish.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\assets\\nen.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:assets\\nen.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\assets\\50.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:assets\\50.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\const.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:const.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\Background.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:Background.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|D:\\New folder\\assets\\fishRight.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{8C33A4BC-0C7A-4C67-9CF9-D38945582DCA}|feeding-frenzy.vcxproj|solutionrelative:assets\\fishRight.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,68 +62,43 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "back.png",
-              "DocumentMoniker": "D:\\New folder\\assets\\back.png",
-              "RelativeDocumentMoniker": "assets\\back.png",
-              "ToolTip": "D:\\New folder\\assets\\back.png",
-              "RelativeToolTip": "assets\\back.png",
+              "DocumentIndex": 12,
+              "Title": "fishRight.png",
+              "DocumentMoniker": "D:\\New folder\\assets\\fishRight.png",
+              "RelativeDocumentMoniker": "assets\\fishRight.png",
+              "ToolTip": "D:\\New folder\\assets\\fishRight.png",
+              "RelativeToolTip": "assets\\fishRight.png",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
-              "WhenOpened": "2025-05-02T06:27:23.256Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-02T06:43:51.048Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Fish.cpp",
-              "DocumentMoniker": "D:\\New folder\\Fish.cpp",
-              "RelativeDocumentMoniker": "Fish.cpp",
-              "ToolTip": "D:\\New folder\\Fish.cpp",
-              "RelativeToolTip": "Fish.cpp",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAC8AAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-01T16:59:04.425Z",
-              "EditorCaption": ""
+              "DocumentIndex": 8,
+              "Title": "nen.png",
+              "DocumentMoniker": "D:\\New folder\\assets\\nen.png",
+              "RelativeDocumentMoniker": "assets\\nen.png",
+              "ToolTip": "D:\\New folder\\assets\\nen.png",
+              "RelativeToolTip": "assets\\nen.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-05-02T06:42:16.905Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Fish.h",
-              "DocumentMoniker": "D:\\New folder\\Fish.h",
-              "RelativeDocumentMoniker": "Fish.h",
-              "ToolTip": "D:\\New folder\\Fish.h",
-              "RelativeToolTip": "Fish.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T16:57:00.712Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Background.cpp",
-              "DocumentMoniker": "D:\\New folder\\Background.cpp",
-              "RelativeDocumentMoniker": "Background.cpp",
-              "ToolTip": "D:\\New folder\\Background.cpp",
-              "RelativeToolTip": "Background.cpp",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-05-01T16:42:39.441Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Background.h",
-              "DocumentMoniker": "D:\\New folder\\Background.h",
-              "RelativeDocumentMoniker": "Background.h",
-              "ToolTip": "D:\\New folder\\Background.h",
-              "RelativeToolTip": "Background.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T16:34:35.227Z"
+              "DocumentIndex": 9,
+              "Title": "50.png",
+              "DocumentMoniker": "D:\\New folder\\assets\\50.png",
+              "RelativeDocumentMoniker": "assets\\50.png",
+              "ToolTip": "D:\\New folder\\assets\\50.png",
+              "RelativeToolTip": "assets\\50.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-05-02T08:27:04.09Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -117,7 +108,7 @@
               "RelativeDocumentMoniker": "Game.cpp",
               "ToolTip": "D:\\New folder\\Game.cpp",
               "RelativeToolTip": "Game.cpp",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAACEAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAAAD0AAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-01T16:29:32.616Z",
               "EditorCaption": ""
@@ -125,19 +116,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "FishAI.h",
+              "DocumentMoniker": "D:\\New folder\\FishAI.h",
+              "RelativeDocumentMoniker": "FishAI.h",
+              "ToolTip": "D:\\New folder\\FishAI.h",
+              "RelativeToolTip": "FishAI.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAB/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-05-02T07:43:32.397Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FishAI.cpp",
+              "DocumentMoniker": "D:\\New folder\\FishAI.cpp",
+              "RelativeDocumentMoniker": "FishAI.cpp",
+              "ToolTip": "D:\\New folder\\FishAI.cpp",
+              "RelativeToolTip": "FishAI.cpp",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-02T07:49:47.666Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Fish.cpp",
+              "DocumentMoniker": "D:\\New folder\\Fish.cpp",
+              "RelativeDocumentMoniker": "Fish.cpp",
+              "ToolTip": "D:\\New folder\\Fish.cpp",
+              "RelativeToolTip": "Fish.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-01T16:59:04.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Fish.h",
+              "DocumentMoniker": "D:\\New folder\\Fish.h",
+              "RelativeDocumentMoniker": "Fish.h",
+              "ToolTip": "D:\\New folder\\Fish.h",
+              "RelativeToolTip": "Fish.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-05-01T16:57:00.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Background.cpp",
+              "DocumentMoniker": "D:\\New folder\\Background.cpp",
+              "RelativeDocumentMoniker": "Background.cpp",
+              "ToolTip": "D:\\New folder\\Background.cpp",
+              "RelativeToolTip": "Background.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-01T16:42:39.441Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Background.h",
+              "DocumentMoniker": "D:\\New folder\\Background.h",
+              "RelativeDocumentMoniker": "Background.h",
+              "ToolTip": "D:\\New folder\\Background.h",
+              "RelativeToolTip": "Background.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-05-01T16:34:35.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Game.h",
               "DocumentMoniker": "D:\\New folder\\Game.h",
               "RelativeDocumentMoniker": "Game.h",
               "ToolTip": "D:\\New folder\\Game.h",
               "RelativeToolTip": "Game.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T16:28:47.534Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T16:28:47.534Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "const.h",
               "DocumentMoniker": "D:\\New folder\\const.h",
               "RelativeDocumentMoniker": "const.h",
@@ -145,18 +209,17 @@
               "RelativeToolTip": "const.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-01T16:28:09.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-01T16:28:09.752Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "main.cpp",
               "DocumentMoniker": "D:\\New folder\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "D:\\New folder\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-05-01T15:20:02.995Z"
             }

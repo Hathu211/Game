@@ -12,6 +12,7 @@ private:
     int targetX, targetY;
     double angle;
     int worldW, worldH;
+    SDL_RendererFlip flip;
 
 public:
     Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const char* imagePath = "assets/fishRight.png",int worldWidth = SCREEN_WIDTH,int worldHeight = SCREEN_HEIGHT);
@@ -19,6 +20,7 @@ public:
     void move(bool isKick);
     SDL_Texture* getTexture() const { return textureFish; }
     double       getAngle()   const { return angle; }
+    SDL_RendererFlip getFlip() const { return flip;} 
     const SDL_Rect& getRect() const { return rect; }
     ~Fish();
 };

@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Fish.cpp" />
+    <ClCompile Include="FishAI.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -139,11 +140,15 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="Fish.h" />
+    <ClInclude Include="FishAI.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\back.png" />
+    <Image Include="assets\50.png">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </Image>
     <Image Include="assets\fishRight.png" />
+    <Image Include="assets\nen.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

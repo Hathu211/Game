@@ -30,6 +30,9 @@
     <ClCompile Include="Fish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FishAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="const.h">
@@ -44,12 +47,18 @@
     <ClInclude Include="Fish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FishAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\back.png">
+    <Image Include="assets\fishRight.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\fishRight.png">
+    <Image Include="assets\nen.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\50.png">
       <Filter>assets</Filter>
     </Image>
   </ItemGroup>

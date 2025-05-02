@@ -1,2 +1,8 @@
-﻿  Game.cpp
+﻿  FishAI.cpp
+D:\New folder\FishAI.cpp(55,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+D:\New folder\FishAI.cpp(56,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Game.cpp
+D:\New folder\Game.cpp(52,37): warning C4305: 'argument': truncation from 'double' to 'float'
+  main.cpp
+  Generating Code...
   feeding-frenzy.vcxproj -> D:\New folder\x64\Debug\feeding-frenzy.exe

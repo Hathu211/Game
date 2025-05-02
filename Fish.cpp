@@ -6,10 +6,12 @@ Fish::Fish(int x, int y, int w, int h, int speed,SDL_Renderer* renderer, const c
 	this->renderer = renderer;
 	this->worldW = worldW;
 	this->worldH = worldH;
+    flip = SDL_FLIP_NONE; 
 	this->speed = speed;
     rect = { x,y,w,h }; 
 	targetX = x + w / 2;
 	targetY = y + h / 2;
+
 	SDL_Surface* surface = IMG_Load(imageFish);
 	if (!surface) {
 		std::cerr << "Failed to load fish image: " << IMG_GetError() << std::endl;
@@ -32,6 +34,8 @@ void Fish::move(bool isKick) {
     if (!isKick) return;
     float dx = targetX - (rect.x + rect.w / 2);
     float dy = targetY - (rect.y + rect.h / 2);
+    flip = (dy < 0) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE; //cap nhat lat theo Oy
+
     float dist = std::sqrt(dx * dx + dy * dy);
     if (dist < 1.0f) return;
 
@@ -49,9 +53,13 @@ void Fish::move(bool isKick) {
     rect.y += static_cast<int>((dy / dist) * vel);
 
     if (rect.x < 0) rect.x = 0;
-    if (rect.x + rect.w > worldW) rect.x = worldW - rect.w;
-    if (rect.y < 0) rect.y = 0;
-    if (rect.y + rect.h > worldH) rect.y = worldH - rect.h;
+    if (rect.x + rect.w > worldW) rect.x = worldW  - rect.w;
+    const int topLimit = worldH - 550; //day tren ca window 550 pixel
+    const int bottomEdge = worldH; //day duoi co th cham day
+    if (rect.y < topLimit)              
+        rect.y = topLimit;           
+    if (rect.y + rect.h > bottomEdge)   
+        rect.y = bottomEdge - rect.h;
 }
 
 Fish::~Fish() {
