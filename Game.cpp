@@ -29,7 +29,7 @@ Game::Game() {
 	
 	int worldW = background->getWidth(); 
 	int worldH = background->getHeight(); 
-	fish = new Fish( 180,260,100,112,134,renderer,"assets/fishRight.png", worldW, worldH);
+	fish = new Fish( 180,260,100,112,150,renderer,"assets/fishRight.png", worldW, worldH);
 	
 	running = true;
 }
