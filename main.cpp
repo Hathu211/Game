@@ -16,11 +16,17 @@ int main(int argc, char* argv[]) {
         std::cerr << "SDL_Init : " << SDL_GetError() << std::endl;
         return 1;
     }
-    IMG_Init(IMG_INIT_PNG);
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
+        std::cerr << "IMG_Init failed: " << IMG_GetError() << std::endl;
+        SDL_Quit();
+        return 1;
+    }
 
-	Game Feeding_frezy;
-	if (Feeding_frezy.running) {
-		Feeding_frezy.run();
-	}
-	return 0;
+    Game Feeding_frezy;
+    if (Feeding_frezy.running) {
+        Feeding_frezy.run();
+    }
+    IMG_Quit();
+    SDL_Quit();
+    return 0;
 }

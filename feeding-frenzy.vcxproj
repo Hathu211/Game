@@ -144,9 +144,8 @@
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\50.png">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </Image>
+    <Image Include="assets\100.png" />
+    <Image Include="assets\30.png" />
     <Image Include="assets\fishRight.png" />
     <Image Include="assets\nen.png" />
   </ItemGroup>

@@ -16,16 +16,18 @@ public:
 	bool isKick = false;
 	Background* background; 
 	Fish* fish; 
-
 	std::vector<FishAI*> fishAI; 
-	Uint32 lastSpawnTime; 
-	Uint32 spawnInterval; 
+	SDL_Texture* fishAITex; 
+	Uint32 lastSpawnTime = 0; 
+	Uint32 spawnInterval = 2000; 
+	int winW = 0, winH = 0; 
+	int worldW = 0, worldH = 0;
 	
 	Game();
-	void render();
-	void handleEvents(SDL_Event& evenet); 
-	void run();
-	void update(); 
-	void spawnFishAI(); 
 	~Game();
+	void run(); 
+	void spawnFish();
+	void handleEvents(SDL_Event& evenet); 
+	void update(); 
+	void render();
 };

@@ -5,11 +5,7 @@
       <FullPath>D:\New folder\x64\Debug\feeding-frenzy.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
-  <ContentFiles>
-    <ContentFile>
-      <FullPath>D:\New folder\assets\50.png</FullPath>
-    </ContentFile>
-  </ContentFiles>
+  <ContentFiles />
   <SatelliteDlls />
   <NonRecipeFileRefs />
 </Project>
