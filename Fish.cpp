@@ -2,27 +2,29 @@
 #include <cmath>
 #include <iostream>
 
-Fish::Fish(int x, int y, int w, int h, int speed,SDL_Renderer* renderer, const char* imageFish, int worldW, int worldH) { 
-	this->renderer = renderer;
-	this->worldW = worldW;
-	this->worldH = worldH;
-    flip = SDL_FLIP_NONE; 
-	this->speed = speed;
-    rect = { x,y,w,h }; 
-	targetX = x + w / 2;
-	targetY = y + h / 2;
+Fish::Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const char* imageFish, int worldW, int worldH) {
+    this->renderer = renderer;
+    this->worldW = worldW;
+    this->worldH = worldH;
+    flip = SDL_FLIP_NONE;
+    this->speed = speed;
+    rect = { x,y,w,h };
+    targetX = x + w / 2;
+    targetY = y + h / 2;
 
-	SDL_Surface* surface = IMG_Load(imageFish);
-	if (!surface) {
-		std::cerr << "Failed to load fish image: " << IMG_GetError() << std::endl;
-		exit(1);
-	}
-	textureFish = SDL_CreateTextureFromSurface(renderer, surface);
-	SDL_FreeSurface(surface);
-	if (!textureFish) {
-		std::cerr << "Failed to create fish texture: " << SDL_GetError() << std::endl;
-		exit(1);
-	}
+    SDL_Surface* surface = IMG_Load(imageFish);
+    if (!surface) {
+        std::cerr << "Failed to load fish image: " << IMG_GetError() << std::endl;
+        exit(1);
+    }
+    else {
+        textureFish = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        if (!textureFish) {
+            std::cerr << "Failed to create fish texture: " << SDL_GetError() << std::endl;
+            exit(1);
+        }
+    }
 }
 
 void Fish::setTarget(int x, int y) {
@@ -34,7 +36,7 @@ void Fish::move(bool isKick) {
     if (!isKick) return;
     float dx = targetX - (rect.x + rect.w / 2);
     float dy = targetY - (rect.y + rect.h / 2);
-    flip = (dy < 0) ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE; //cap nhat lat theo Oy
+    flip = (dy < 0) ? SDL_FLIP_VERTICAL : SDL_FLIP_HORIZONTAL; //cap nhat lat theo Oy
 
     float dist = std::sqrt(dx * dx + dy * dy);
     if (dist < 1.0f) return;

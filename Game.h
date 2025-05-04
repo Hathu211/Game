@@ -7,6 +7,7 @@
 #include "const.h"
 #include "Fish.h"
 #include "FishAI.h"
+#include "Bubble.h"
 
 class Game {
 public:
@@ -16,17 +17,16 @@ public:
 	bool isKick = false;
 	Background* background; 
 	Fish* fish; 
-	std::vector<FishAI*> fishAI; 
+	std::vector<FishAI*> fishAI; //chua cac con ca AI khac sinh ra
+	std::vector<Bubble*> bubbles; 
 	SDL_Texture* fishAITex; 
 	Uint32 lastSpawnTime = 0; 
 	Uint32 spawnInterval = 2000; 
-	int winW = 0, winH = 0; 
-	int worldW = 0, worldH = 0;
-	
+	SDL_RendererFlip flip = SDL_FLIP_NONE; 
+
 	Game();
 	~Game();
 	void run(); 
-	void spawnFish();
 	void handleEvents(SDL_Event& evenet); 
 	void update(); 
 	void render();

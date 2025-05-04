@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FishAI.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -138,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Bubble.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FishAI.h" />
@@ -146,7 +148,8 @@
   <ItemGroup>
     <Image Include="assets\100.png" />
     <Image Include="assets\30.png" />
-    <Image Include="assets\fishRight.png" />
+    <Image Include="assets\bubble.png" />
+    <Image Include="assets\fish.png" />
     <Image Include="assets\nen.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -33,6 +33,9 @@
     <ClCompile Include="FishAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bubble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="const.h">
@@ -50,11 +53,11 @@
     <ClInclude Include="FishAI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bubble.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\fishRight.png">
-      <Filter>assets</Filter>
-    </Image>
     <Image Include="assets\nen.png">
       <Filter>assets</Filter>
     </Image>
@@ -62,6 +65,12 @@
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\30.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\fish.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\bubble.png">
       <Filter>assets</Filter>
     </Image>
   </ItemGroup>

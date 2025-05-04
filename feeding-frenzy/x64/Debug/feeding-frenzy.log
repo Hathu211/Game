@@ -1,9 +1,8 @@
-﻿  Background.cpp
-  Fish.cpp
-D:\New folder\Fish.cpp(35,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-D:\New folder\Fish.cpp(36,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  FishAI.cpp
-  Game.cpp
-  main.cpp
-  Generating Code...
-  feeding-frenzy.vcxproj -> D:\New folder\x64\Debug\feeding-frenzy.exe
+﻿  Game.cpp
+D:\New folder\Game.cpp(97,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\New folder\Game.cpp(121,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\New folder\Game.cpp(134,22): error C2086: 'SDL_Rect aiRect': redefinition
+      D:\New folder\Game.cpp(119,22):
+      see declaration of 'aiRect'
+  
+D:\New folder\Game.cpp(145,37): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data

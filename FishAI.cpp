@@ -19,6 +19,17 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 	angle(directionAngle),
 	speed(speed),
 	flip(SDL_FLIP_NONE) {
+	//dung de lat anh 
+	if (x <= 0) {
+		x = 1;
+		angle = 0.0f;
+		flip = SDL_FLIP_HORIZONTAL;
+	}
+	else if (x + w >= backW) {
+		x = backW - w - 1; 
+		angle = M_PI; //180 do
+	}
+	rect.x = x;
 	vx = cosf(angle) * speed; 
 	vy = sinf(angle) * speed;
 
@@ -33,22 +44,20 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 		if (!textureAI) {
 			SDL_Log("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
 		}
-	}	
+	}
+	
 }
 
-// FishAI.cpp
 bool FishAI::update() {
-	// 1. Di chuyển
 	rect.x += static_cast<int>(vx);
 	rect.y += static_cast<int>(vy);
 
-	// 2. Giới hạn ngang như Player
 	if (rect.x < 0)
 		rect.x = 0;
 	else if (rect.x + rect.w > backW)
 		rect.x = backW - rect.w;
 
-	// 3. Giới hạn dọc như Player
+	//gioi han bien tren 
 	const int topLimit = backH - 550;
 	const int bottomEdge = backH;
 	if (rect.y < topLimit)
@@ -56,25 +65,19 @@ bool FishAI::update() {
 	else if (rect.y + rect.h > bottomEdge)
 		rect.y = bottomEdge - rect.h;
 
-	// 4. Nếu chạm biên (bất kỳ) -> xóa
+	//cham bien bat ky la xoa
 	if (rect.x == 0
 		|| rect.x + rect.w == backW
 		|| rect.y == topLimit
 		|| rect.y + rect.h == bottomEdge) {
 		return false;
 	}
-
 	return true;
 }
 
 
 void FishAI::render(const SDL_Rect& camera) {
-	SDL_Rect dst = {
-			rect.x - camera.x,
-			rect.y - camera.y,
-			rect.w,
-			rect.h
-	};
+	SDL_Rect dst = { rect.x - camera.x, rect.y - camera.y, rect.w,rect.h }; 
 	SDL_RenderCopyEx(renderer, textureAI, nullptr, &dst, 0.0, nullptr, flip);
 }
 
