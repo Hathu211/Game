@@ -131,14 +131,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BossFish.cpp" />
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Fish.cpp" />
     <ClCompile Include="FishAI.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BossFish.h" />
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="Fish.h" />
@@ -146,11 +149,14 @@
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\100.png" />
+    <Image Include="assets\180.png" />
     <Image Include="assets\30.png" />
     <Image Include="assets\bubble.png" />
     <Image Include="assets\fish.png" />
     <Image Include="assets\nen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\font.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

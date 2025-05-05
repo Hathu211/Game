@@ -36,6 +36,12 @@
     <ClCompile Include="Bubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Score.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BossFish.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="const.h">
@@ -56,12 +62,12 @@
     <ClInclude Include="Bubble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BossFish.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\nen.png">
-      <Filter>assets</Filter>
-    </Image>
-    <Image Include="assets\100.png">
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\30.png">
@@ -73,5 +79,13 @@
     <Image Include="assets\bubble.png">
       <Filter>assets</Filter>
     </Image>
+    <Image Include="assets\180.png">
+      <Filter>assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\font.ttf">
+      <Filter>assets</Filter>
+    </Font>
   </ItemGroup>
 </Project>

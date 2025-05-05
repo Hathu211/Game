@@ -27,6 +27,30 @@ Fish::Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const 
     }
 }
 
+void Fish::grow(float bigSize) {
+    int cx = rect.x + rect.w / 2; 
+    int cy = rect.y + rect.h / 2; 
+    rect.w = static_cast<int>(rect.w * bigSize); 
+    rect.h = static_cast<int>(rect.h * bigSize); 
+    rect.x = cx - rect.w / 2;
+    rect.y = cy - rect.h / 2; 
+}
+
+SDL_Rect Fish::getHeadRect() const {
+    const SDL_Rect& p = this->getRect();
+    int headW = p.w / 3;
+    int headH = p.h / 2;
+    SDL_Rect head;
+    double pAngle = this->getAngle();
+    if (fabs(pAngle - 0.0) < 0.001) {
+        head = {p.x + p.w - headW, p.y + (p.h - headH) / 2,headW, headH };
+    }
+    else {
+        head = { p.x, p.y + (p.h - headH) / 2, headW, headH }; 
+    }
+    return head;
+}
+
 void Fish::setTarget(int x, int y) {
     targetX = x;
     targetY = y;
@@ -63,6 +87,7 @@ void Fish::move(bool isKick) {
     if (rect.y + rect.h > bottomEdge)   
         rect.y = bottomEdge - rect.h;
 }
+
 
 Fish::~Fish() {
     SDL_DestroyTexture(textureFish);

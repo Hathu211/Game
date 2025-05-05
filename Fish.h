@@ -23,5 +23,7 @@ public:
     double       getAngle()   const { return angle; }
     SDL_RendererFlip getFlip() const { return flip;} 
     const SDL_Rect& getRect() const { return rect; }
+    void grow(float bigSize);
+    SDL_Rect getHeadRect() const;
     ~Fish();
 };

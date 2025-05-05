@@ -75,7 +75,6 @@ bool FishAI::update() {
 	return true;
 }
 
-
 void FishAI::render(const SDL_Rect& camera) {
 	SDL_Rect dst = { rect.x - camera.x, rect.y - camera.y, rect.w,rect.h }; 
 	SDL_RenderCopyEx(renderer, textureAI, nullptr, &dst, 0.0, nullptr, flip);
