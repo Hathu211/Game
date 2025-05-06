@@ -13,12 +13,14 @@ void FishAI::InitScreenSize(int w, int h) {
 	backH = h;
 }
 
-FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* imagePathAI, float directionAngle, float speed)
+FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* imagePathAI, float directionAngle, float speed, int pointValue)
 	: renderer(renderer),
 	rect{ x, y, w, h },
 	angle(directionAngle),
 	speed(speed),
-	flip(SDL_FLIP_NONE) {
+	flip(SDL_FLIP_NONE),
+	pointValue(pointValue)
+{
 	//dung de lat anh 
 	if (x <= 0) {
 		x = 1;

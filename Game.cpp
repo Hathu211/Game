@@ -34,7 +34,7 @@ Game::Game() {
     currentLevel = 1; 
     playerScore = 0; 
     bossSpawned = false; 
-    //tao window
+        //tao window
     srand((unsigned)time(nullptr));
     running = true;
     SDL_Init(SDL_INIT_VIDEO);
@@ -54,8 +54,13 @@ Game::Game() {
         cerr << "invalid renderer " << SDL_GetError() << endl;
         running = false;
     }
+        //level Back
+    std::vector<std::string> backLevel = { "assets/level1Back.png", "assets/level2Back.png" };
     background = new Background(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, "assets/nen.png");
-
+    background->loadBackLevel(backLevel); 
+    overlayActive = true; 
+    overlayStart = SDL_GetTicks(); 
+    overlayLife = 2800 ; 
     int worldW = background->getWidth();
     int worldH = background->getHeight();
     std::cout << "worldW = " << worldW << ", worldH = " << worldH << std::endl; //in ra terminal kiem tra worldW and worldH co loi khong, = 0; loi 
@@ -63,7 +68,7 @@ Game::Game() {
 
 	FishAI::InitScreenSize(worldW, worldH);
 	fishAITex = IMG_LoadTexture(renderer, "assets/30.png");
-	fishAI.push_back(new FishAI( 0, 100, 80, 82, renderer, "assets/30.png"));
+	fishAI.push_back(new FishAI( 0, 100, 80, 82, renderer, "assets/30.png", 0.0f, 3.5f, score::getScoreFishAI("assets/30.png",currentLevel)));
 
 	lastSpawnTime = SDL_GetTicks();
     bossSpawned = false; 
@@ -110,7 +115,6 @@ void Game::render() {
     //ve score bossFish
     for (auto b : bossFish) {
         b->render(background->getCamera());
-        // hiển thị điểm 180 trên đầu boss
         SDL_Color blue = { 0, 255, 255, 255 };
         std::string text = "100";
         SDL_Surface* surf = TTF_RenderText_Solid(scoreFont, text.c_str(), blue);
@@ -123,9 +127,33 @@ void Game::render() {
         SDL_RenderCopy(renderer, tex, nullptr, &dst);
         SDL_DestroyTexture(tex);
     }
-
     for (auto bubble : bubbles) {
         bubble->renderBubble(cam); 
+    }
+        //ve level 
+    //background->renderBackLevel(currentLevel); 
+    if (overlayActive) {
+        Uint32 now = SDL_GetTicks(); 
+        Uint32 e = now - overlayStart; 
+        if (e < overlayLife) {
+            SDL_Texture* ov = background->getoverLays(currentLevel);
+            if (ov) {
+                float t = float(e) / overlayLife;
+                t *= 2.0f; //tgian mờ nhanh hơn 
+                if (t > 1.0f) t = 1.0f;
+                Uint8 alpha = Uint8(255 * (1.0f - t));
+                SDL_SetTextureAlphaMod(ov, alpha);
+                int ow = SCREEN_WIDTH / 30;
+                int oh = SCREEN_HEIGHT / 60; 
+                SDL_QueryTexture(ov, nullptr, nullptr,&ow , &oh);
+                SDL_Rect dst = { (SCREEN_WIDTH - ow) / 2, (SCREEN_HEIGHT - oh) / 2,ow, oh };
+                SDL_RenderCopy(renderer, ov, nullptr, &dst);
+            }
+            else {
+                overlayActive = false; 
+            }
+        }
+
     }
     SDL_RenderPresent(renderer); 
 }
@@ -138,7 +166,7 @@ void Game::update() {
         int worldH = background->getHeight();
         int worldW = background->getWidth();
             //gioi han phia tren
-        const int topLimit = worldW - 550;
+        const int topLimit = worldH - 550;
         const int bottomEdge = worldH;
         if (worldW <= w || worldH <= h) {
             std::cerr << "Invalid world size: worldW = " << worldW << ", worldH" << worldH << std::endl;
@@ -158,47 +186,61 @@ void Game::update() {
             y = topLimit + rand() % (bottomEdge - topLimit + 1);
             directionAngle = M_PI;
         }
-        std::cout << "Spawning FishAI at (" << x << ", " << y << ")" << std::endl;
-        FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/30.png");
-        if (newFishAI) {
-            fishAI.push_back(newFishAI);
-            std::cout << "FishAI spawned, total: " << fishAI.size() << std::endl;
+            //ca 30.png level va ca 100.png 
+        if (currentLevel == 1) {
+            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/30.png", score::scoreLevel1);
+            if (newFishAI) {
+                fishAI.push_back(newFishAI);
+                std::cout << "FishAI spawned, total: " << fishAI.size() << std::endl;
+            }
+            else {
+                std::cerr << "Error: Failed to create FishAI" << std::endl;
+            }
         }
-        else {
-            std::cerr << "Error: Failed to create FishAI" << std::endl;
+        else if (currentLevel == 2) {
+            const char* fishImage = (rand() % 2 == 0) ? "assets/30.png" : "assets/100.png"; 
+            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/30.png", score::getScoreFishAI(fishImage, currentLevel)); 
+            if (newFishAI) {
+                fishAI.push_back(newFishAI); 
+            }
+            /*int edge2 = rand() % 4;
+            float dir2 = (rand() % 360) * M_PI / 180.0f;
+            int x2 = (edge2 < 2 ? 0 : worldW - w);
+            int y2 = topLimit + rand() % (bottomEdge - topLimit + 1);
+            fishAI.push_back(new FishAI(x2, y2, w, h, renderer, "assets/100.png", score::scoreLevel2)); */
         }
     }
     fish->move(isKick);
     background->updateCamera(fish->getRect());
-        //xu ly va cham voi Boss
+        //xu ly chuyen level voi boss
     int worldW = background->getWidth(); 
     int worldH = background->getHeight();
     const int topLimit = worldH - 550;
     const int bottomEdge = worldH;
     const int bw = 100, bh = 102;
     const float speed = 3.5f;
-    if (!bossSpawned && playerScore > 40) { //khi fish duoc 40 diem thi boss xuat hien 
+    int levelScore = (currentLevel == 1 ? 40 : 300); //chon level de render image
+    const char* bossImage = (currentLevel == 1 ? "assets/100.png" : "assets/1000.png"); 
+    if (!bossSpawned && playerScore > levelScore) {
         int edge = rand() % 2; 
-        int bx = (edge == 0) ? 0 : (worldW - bw); 
+        int bx = (edge == 0 ? 0 : worldW - bw); 
         int by = topLimit + rand() % (bottomEdge - topLimit + 1); 
-        bossFish.push_back(new BossFish(bx, by, bw, bh, speed, renderer, "assets/100.png")); 
+        bossFish.push_back(new BossFish(bx, by, bw, bh, speed, renderer, bossImage)); 
         bossSpawned = true; 
     }
-
+        //ve boss va cham 
     SDL_Rect playerRect = fish->getRect();
-    SDL_Rect headRect = fish->getHeadRect();          // dùng trực tiếp headRect của Player
+    SDL_Rect headRect = fish->getHeadRect();          
     int pcx = playerRect.x + playerRect.w / 2;
     int pcy = playerRect.y + playerRect.h / 2;
 
     for (auto it = bossFish.begin(); it != bossFish.end(); ) {
         BossFish* b = *it;
         b->updateBoss(pcx, pcy);
-
         SDL_Rect bRect = b->getRectBoss();
         SDL_Rect intersection;
         // Nếu head của Player chạm boss
         if (SDL_IntersectRect(&headRect, &bRect, &intersection)) {
-            // Tạo bong bóng giống FishAI
             int spawnX = intersection.x + intersection.w / 2;
             int spawnY = intersection.y + intersection.h / 2;
             int numBubbles = 5 + rand() % 5;
@@ -207,23 +249,15 @@ void Game::update() {
                 int offsetY = rand() % 20 - 10;
                 float angle = (rand() % 360) * M_PI / 180.0f;
                 float speed = 2.0f + (rand() % 3);
-                bubbles.push_back(new Bubble(
-                    renderer,
-                    spawnX + offsetX,
-                    spawnY + offsetY,
-                    cosf(angle) * speed,
-                    -sinf(angle) * speed,
-                    "assets/bubble.png",
-                    50
-                ));
+                bubbles.push_back(new Bubble (renderer,spawnX + offsetX,spawnY + offsetY,cosf(angle) * speed,-sinf(angle) * speed,"assets/bubble.png",50));
             }
-
-            // Sau khi đã tạo bubble mới xét điểm
             if (playerScore >= 100) {
                 fish->grow(1.3f);
                 playerScore += 100;
                 delete b;
                 it = bossFish.erase(it);
+                nextLevel(); 
+                return; 
             }
             else {
                 running = false;  // boss mạnh hơn → game over
@@ -239,22 +273,23 @@ void Game::update() {
         if (!(*ai)->update()) {
             delete* ai;
             ai = fishAI.erase(ai);
+            continue;
         }
         else {
             SDL_Rect aiRect = (*ai)->getRect();
-            SDL_Rect pRect = fish->getRect(); 
+            SDL_Rect pRect = fish->getRect();
             SDL_Rect headRect = fish->getHeadRect();
-            SDL_Rect intersection; 
+            SDL_Rect intersection;
             if (SDL_IntersectRect(&headRect, &aiRect, &intersection)) {
                 //tao bubble
-                int spawnX = intersection.x + intersection.w / 2; 
+                int spawnX = intersection.x + intersection.w / 2;
                 int spawnY = intersection.y + intersection.h / 2;
                 int numBubbles = 5 + rand() % 5;
                 for (int i = 0; i < numBubbles; i++) {
                     int offsetX = rand() % 20 - 10;
                     int offsetY = rand() % 20 - 10;
-                    int bx = spawnX + offsetX; 
-                    int by = spawnY + offsetY; 
+                    int bx = spawnX + offsetX;
+                    int by = spawnY + offsetY;
                     float randAngle = (rand() % 360) * M_PI / 180.0;
                     float speed = 2.0f + (rand() % 3);
                     float initialVx = cosf(randAngle) * speed;
@@ -262,7 +297,8 @@ void Game::update() {
                     Bubble* bubble = new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, initialVx, initialVy, "assets/bubble.png", 50);
                     bubbles.push_back(bubble);
                 }
-                playerScore += score::getScoreLevel1(currentLevel);
+
+                playerScore += (*ai)->getPointValue();
 
                 delete* ai;
                 ai = fishAI.erase(ai);
@@ -271,7 +307,7 @@ void Game::update() {
                 ++ai;
             }
         }
-    } 
+    }
     // Cập nhật và dọn dẹp bong bóng
     for (auto it = bubbles.begin(); it != bubbles.end(); ) {
         if (!(*it)->updateBubble(now)) {
@@ -283,8 +319,25 @@ void Game::update() {
         }
     }
 }
+    //level
+void Game::nextLevel() {
+    for (auto ai : fishAI) delete ai; 
+    for (auto b : bossFish) delete b; 
+    for (auto bub : bubbles) delete bub; 
+    fishAI.clear(); 
+    bossFish.clear(); 
+    bubbles.clear(); 
+    currentLevel++; 
+    bossSpawned = false; 
+    overlayActive = true; 
+    overlayStart = SDL_GetTicks(); 
 
-
+    int worldW = background->getWidth(); 
+    int worldH = background->getHeight(); 
+    const int topLimit = worldH - 550; 
+    const int bottomEdge = worldH; 
+    fishAI.push_back(new FishAI(0, topLimit + rand() % (bottomEdge - topLimit + 1), 80, 82, renderer, "assets/100.png")); //level 2 an bach tuoc
+}
 
 void Game::handleEvents(SDL_Event& e) {
     SDL_Rect cam = background->getCamera();

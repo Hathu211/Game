@@ -149,10 +149,14 @@
     <ClInclude Include="Game.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\1000.png" />
     <Image Include="assets\180.png" />
     <Image Include="assets\30.png" />
+    <Image Include="assets\80.png" />
     <Image Include="assets\bubble.png" />
     <Image Include="assets\fish.png" />
+    <Image Include="assets\level1Back.png" />
+    <Image Include="assets\level2Back.png" />
     <Image Include="assets\nen.png" />
   </ItemGroup>
   <ItemGroup>

@@ -32,10 +32,14 @@ public:
 	SDL_Texture* bossFishTex;
 	std::vector<BossFish*> bossFish; 
 	bool bossSpawned; 
-		//score level
+		//score 
 	int currentLevel; 
 	int playerScore; 
-	TTF_Font* scoreFont; 
+	TTF_Font* scoreFont;
+		//level
+	bool overlayActive; 
+	Uint32 overlayStart; 
+	Uint32 overlayLife; 
 
 	Game();
 	~Game();
@@ -43,4 +47,6 @@ public:
 	void handleEvents(SDL_Event& evenet); 
 	void update(); 
 	void render(); 
+		//level
+	void nextLevel(); 
 };

@@ -14,6 +14,7 @@ private:
     int worldW, worldH;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     int offsetX, offsetY; 
+    
 
 public:
     Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const char* imagePath = "assets/fish.png",int worldWidth = SCREEN_WIDTH,int worldHeight = SCREEN_HEIGHT);
@@ -25,5 +26,6 @@ public:
     const SDL_Rect& getRect() const { return rect; }
     void grow(float bigSize);
     SDL_Rect getHeadRect() const;
+
     ~Fish();
 };

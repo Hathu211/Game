@@ -82,6 +82,18 @@
     <Image Include="assets\180.png">
       <Filter>assets</Filter>
     </Image>
+    <Image Include="assets\80.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\1000.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\level1Back.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\level2Back.png">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\font.ttf">
