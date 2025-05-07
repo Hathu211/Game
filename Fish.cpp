@@ -88,7 +88,6 @@ void Fish::move(bool isKick) {
         rect.y = bottomEdge - rect.h;
 }
 
-
 Fish::~Fish() {
     SDL_DestroyTexture(textureFish);
 }

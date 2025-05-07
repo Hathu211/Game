@@ -20,10 +20,10 @@ public:
 	bool isKick = false;
 	Background* background; 
 	Fish* fish; 
-
-	std::vector<FishAI*> fishAI; //chua cac con ca AI khac sinh ra 
+		//fishAI
+	std::vector<FishAI*> fishAI; 
 	SDL_Texture* fishAITex;
-
+		//bubble
 	std::vector<Bubble*> bubbles;
 	Uint32 lastSpawnTime = 0; 
 	Uint32 spawnInterval = 2000; 
@@ -44,7 +44,7 @@ public:
 	Game();
 	~Game();
 	void run(); 
-	void handleEvents(SDL_Event& evenet); 
+	void handleEvents(SDL_Event& event); 
 	void update(); 
 	void render(); 
 		//level

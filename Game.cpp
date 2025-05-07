@@ -67,9 +67,8 @@ Game::Game() {
     fish = new Fish(180, 260, 85, 82, 150, renderer, "assets/fish.png", worldW, worldH);
 
 	FishAI::InitScreenSize(worldW, worldH);
-	fishAITex = IMG_LoadTexture(renderer, "assets/30.png");
-	fishAI.push_back(new FishAI( 0, 100, 80, 82, renderer, "assets/30.png", 0.0f, 3.5f, score::getScoreFishAI("assets/30.png",currentLevel)));
-
+	//fishAITex = IMG_LoadTexture(renderer, "assets/cavang20.png");
+	fishAI.push_back(new FishAI( 0, 100, 80, 82, renderer, "assets/cavang20.png", 0.0f, 3.5f, score::getScoreFishAI("assets/cavang20.png",currentLevel)));
 	lastSpawnTime = SDL_GetTicks();
     bossSpawned = false; 
     running = true;
@@ -102,7 +101,8 @@ void Game::render() {
         SDL_Rect aiWorld = ai->getRect();
         SDL_Rect aiScreen = { aiWorld.x - cam.x, aiWorld.y - cam.y, aiWorld.w, aiWorld.h };
         SDL_Color white = { 255,255,255,255 };
-        string aiScoreText = to_string(score::getScoreLevel1(currentLevel));
+        //string aiScoreText = to_string(score::getScoreLevel1(currentLevel));
+        string aiScoreText = to_string(ai->getPointValue());
         SDL_Surface* aiSurface = TTF_RenderText_Solid(scoreFont, aiScoreText.c_str(),white);
         SDL_Texture* aiTexture = SDL_CreateTextureFromSurface(renderer, aiSurface);
         int textW, textH;
@@ -116,13 +116,13 @@ void Game::render() {
     for (auto b : bossFish) {
         b->render(background->getCamera());
         SDL_Color blue = { 0, 255, 255, 255 };
-        std::string text = "100";
+        //std::string text = "100";
+        std::string text = (currentLevel == 1) ? "100" : "1000";
         SDL_Surface* surf = TTF_RenderText_Solid(scoreFont, text.c_str(), blue);
         SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
         int w, h; SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
         SDL_Rect r = b->getRectBoss();
-        SDL_Rect dst = { r.x - cam.x + r.w / 2 - w / 2,
-                         r.y - cam.y - h - 5, w, h };
+        SDL_Rect dst = { r.x - cam.x + r.w / 2 - w / 2,r.y - cam.y - h - 5, w, h };
         SDL_FreeSurface(surf);
         SDL_RenderCopy(renderer, tex, nullptr, &dst);
         SDL_DestroyTexture(tex);
@@ -153,7 +153,6 @@ void Game::render() {
                 overlayActive = false; 
             }
         }
-
     }
     SDL_RenderPresent(renderer); 
 }
@@ -165,15 +164,15 @@ void Game::update() {
         int w = 80, h = 82;
         int worldH = background->getHeight();
         int worldW = background->getWidth();
-            //gioi han phia tren
+        //gioi han phia tren
         const int topLimit = worldH - 550;
         const int bottomEdge = worldH;
         if (worldW <= w || worldH <= h) {
             std::cerr << "Invalid world size: worldW = " << worldW << ", worldH" << worldH << std::endl;
             return;
         }
-            //random 4 goc sinh ra ca AI
-        int edge = rand() % 4;
+        //random 2 goc sinh ra ca AI
+        int edge = rand() % 2;
         int x, y;
         float directionAngle;
         if (edge == 0) {
@@ -186,9 +185,9 @@ void Game::update() {
             y = topLimit + rand() % (bottomEdge - topLimit + 1);
             directionAngle = M_PI;
         }
-            //ca 30.png level va ca 100.png 
+            //ca vang and bachtuoc
         if (currentLevel == 1) {
-            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/30.png", score::scoreLevel1);
+            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/cavang20.png", score::scoreLevel1);
             if (newFishAI) {
                 fishAI.push_back(newFishAI);
                 std::cout << "FishAI spawned, total: " << fishAI.size() << std::endl;
@@ -198,39 +197,34 @@ void Game::update() {
             }
         }
         else if (currentLevel == 2) {
-            const char* fishImage = (rand() % 2 == 0) ? "assets/30.png" : "assets/100.png"; 
-            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/30.png", score::getScoreFishAI(fishImage, currentLevel)); 
+            const char* fishImage = (rand() % 2 == 0) ? "assets/cavang20.png" : "assets/bachtuoc50.png";
+            FishAI* newFishAI = new FishAI(x, y, w, h, renderer, fishImage, score::getScoreFishAI(fishImage, currentLevel));
             if (newFishAI) {
-                fishAI.push_back(newFishAI); 
+                fishAI.push_back(newFishAI);
             }
-            /*int edge2 = rand() % 4;
-            float dir2 = (rand() % 360) * M_PI / 180.0f;
-            int x2 = (edge2 < 2 ? 0 : worldW - w);
-            int y2 = topLimit + rand() % (bottomEdge - topLimit + 1);
-            fishAI.push_back(new FishAI(x2, y2, w, h, renderer, "assets/100.png", score::scoreLevel2)); */
         }
     }
     fish->move(isKick);
     background->updateCamera(fish->getRect());
-        //xu ly chuyen level voi boss
-    int worldW = background->getWidth(); 
+    //xu ly chuyen level voi boss
+    int worldW = background->getWidth();
     int worldH = background->getHeight();
     const int topLimit = worldH - 550;
     const int bottomEdge = worldH;
     const int bw = 100, bh = 102;
     const float speed = 3.5f;
     int levelScore = (currentLevel == 1 ? 40 : 300); //chon level de render image
-    const char* bossImage = (currentLevel == 1 ? "assets/100.png" : "assets/1000.png"); 
+    const char* bossImage = (currentLevel == 1 ? "assets/bachtuoc50.png" : "assets/boss1000.png");
     if (!bossSpawned && playerScore > levelScore) {
-        int edge = rand() % 2; 
-        int bx = (edge == 0 ? 0 : worldW - bw); 
-        int by = topLimit + rand() % (bottomEdge - topLimit + 1); 
-        bossFish.push_back(new BossFish(bx, by, bw, bh, speed, renderer, bossImage)); 
-        bossSpawned = true; 
+        int edge = rand() % 2;
+        int bx = (edge == 0 ? 0 : worldW - bw);
+        int by = topLimit + rand() % (bottomEdge - topLimit + 1);
+        bossFish.push_back(new BossFish(bx, by, bw, bh, speed, renderer, bossImage));
+        bossSpawned = true;
     }
-        //ve boss va cham 
+    //ve boss va cham 
     SDL_Rect playerRect = fish->getRect();
-    SDL_Rect headRect = fish->getHeadRect();          
+    SDL_Rect headRect = fish->getHeadRect();
     int pcx = playerRect.x + playerRect.w / 2;
     int pcy = playerRect.y + playerRect.h / 2;
 
@@ -249,16 +243,34 @@ void Game::update() {
                 int offsetY = rand() % 20 - 10;
                 float angle = (rand() % 360) * M_PI / 180.0f;
                 float speed = 2.0f + (rand() % 3);
-                bubbles.push_back(new Bubble (renderer,spawnX + offsetX,spawnY + offsetY,cosf(angle) * speed,-sinf(angle) * speed,"assets/bubble.png",50));
+                bubbles.push_back(new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, cosf(angle) * speed, -sinf(angle) * speed, "assets/bubble.png", 50));
             }
-            if (playerScore >= 100) {
+            if (currentLevel == 1 && playerScore >= 100) {
                 fish->grow(1.3f);
                 playerScore += 100;
                 delete b;
                 it = bossFish.erase(it);
-                nextLevel(); 
-                return; 
+                nextLevel();
+                return;
             }
+            else if (currentLevel == 2 && playerScore >= 500) {
+                fish->grow(1.5f);
+                playerScore += 1000;
+                delete b;
+                it = bossFish.erase(it);
+                nextLevel();
+                return;
+            }
+
+
+            /*if (playerScore >= 100) {
+                fish->grow(1.3f);
+                playerScore += 100;
+                delete b;
+                it = bossFish.erase(it);
+                nextLevel();
+                return;
+            }*/
             else {
                 running = false;  // boss mạnh hơn → game over
                 return;
@@ -335,8 +347,28 @@ void Game::nextLevel() {
     int worldW = background->getWidth(); 
     int worldH = background->getHeight(); 
     const int topLimit = worldH - 550; 
-    const int bottomEdge = worldH; 
-    fishAI.push_back(new FishAI(0, topLimit + rand() % (bottomEdge - topLimit + 1), 80, 82, renderer, "assets/100.png")); //level 2 an bach tuoc
+    const int bottomEdge = worldH;
+    const int w = 80, h = 82;
+    if (currentLevel == 1) {
+        fishAI.push_back(new FishAI(0, topLimit + rand() % (bottomEdge - topLimit - h), w, h, renderer, "assets/cavang20.png", 0.0f, 3.5f, score::getScoreFishAI("assets/cavang20.png", currentLevel)));
+    }
+    else if (currentLevel == 2) {
+        // Sinh một cá vàng và một bạch tuộc
+        int edge = rand() % 2;
+        int x = (edge == 0 ? 0 : worldW - w);
+        int y = topLimit + rand() % (bottomEdge - topLimit - h);
+        float directionAngle = (edge == 0 ? 0.0f : M_PI);
+        fishAI.push_back(new FishAI(x, y, w, h, renderer, "assets/cavang20.png", directionAngle, 3.5f, score::getScoreFishAI("assets/cavang20.png", currentLevel)));
+        // Sinh bạch tuộc ở vị trí khác
+        edge = rand() % 2;
+        x = (edge == 0 ? 0 : worldW - w);
+        y = topLimit + rand() % (bottomEdge - topLimit - h);
+        directionAngle = (edge == 0 ? 0.0f : M_PI);
+        fishAI.push_back(new FishAI(x, y, w, h, renderer, "assets/bachtuoc50.png", directionAngle, 3.5f, score::getScoreFishAI("assets/bachtuoc50.png", currentLevel)));
+    }
+
+    //fishAI.push_back(new FishAI(0, topLimit + rand() % (bottomEdge - topLimit + 1), 80, 82, renderer, "assets/bachtuoc50.png")); //level 2 an bach tuoc
+   // fishAI.push_back(new FishAI(0, topLimit + rand() % (bottomEdge - topLimit - 82), 80, 82, renderer, "assets/cavang20.png", 0.0f, 3.5f, score::getScoreFishAI("assets/cavang20.png", currentLevel)));
 }
 
 void Game::handleEvents(SDL_Event& e) {

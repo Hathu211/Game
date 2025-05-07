@@ -9,7 +9,7 @@ private:
 	SDL_Rect rect; 
 	float speed; 
 public: 
-	BossFish(int x, int y, int w, int h, float speed, SDL_Renderer* renderer, const char* imagePath = "assets/100.png"); 
+	BossFish(int x, int y, int w, int h, float speed, SDL_Renderer* renderer, const char* imagePath = "assets/bachtuoc50.png"); 
 	~BossFish(); 
 	void updateBoss(int playerCenterX, int playerCenterY); 
 	void render(const SDL_Rect& cam); 

@@ -19,7 +19,7 @@ namespace score {
 	}
 	inline int getScoreFishAI(const std::string& imagePath, int level) {
 		if (level == 2) {
-			if (imagePath == "assets/100.png") {
+			if (imagePath == "assets/bachtuoc50.png") {
 				return scoreLevel2; 
 			}
 			return scoreLevel1; 

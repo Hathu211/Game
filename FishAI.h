@@ -16,7 +16,7 @@ private:
     int pointValue;
 
 public:
-    FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* imagePathAI = "assets/30.png", float directionAngle = 0.0f, float speed = 3.5f, int pointValue = 20);
+    FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* imagePathAI = "assets/cavang20.png", float directionAngle = 0.0f, float speed = 3.5f, int pointValue = 20);
     ~FishAI();
     bool update(); //dung bool de check neu cham bien -> xoa AI
     void render(const SDL_Rect& camera);

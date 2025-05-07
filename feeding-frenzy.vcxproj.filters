@@ -70,28 +70,34 @@
     <Image Include="assets\nen.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\30.png">
-      <Filter>assets</Filter>
-    </Image>
     <Image Include="assets\fish.png">
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\bubble.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\180.png">
-      <Filter>assets</Filter>
-    </Image>
-    <Image Include="assets\80.png">
-      <Filter>assets</Filter>
-    </Image>
-    <Image Include="assets\1000.png">
-      <Filter>assets</Filter>
-    </Image>
     <Image Include="assets\level1Back.png">
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\level2Back.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\bachtuoc50.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\boss1000.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\camap.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\cavang20.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\camapbig.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\camapsmall.png">
       <Filter>assets</Filter>
     </Image>
   </ItemGroup>

@@ -47,7 +47,6 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 			SDL_Log("SDL_CreateTextureFromSurface failed: %s", SDL_GetError());
 		}
 	}
-	
 }
 
 bool FishAI::update() {
@@ -58,7 +57,6 @@ bool FishAI::update() {
 		rect.x = 0;
 	else if (rect.x + rect.w > backW)
 		rect.x = backW - rect.w;
-
 	//gioi han bien tren 
 	const int topLimit = backH - 550;
 	const int bottomEdge = backH;
@@ -66,7 +64,6 @@ bool FishAI::update() {
 		rect.y = topLimit;
 	else if (rect.y + rect.h > bottomEdge)
 		rect.y = bottomEdge - rect.h;
-
 	//cham bien bat ky la xoa
 	if (rect.x == 0
 		|| rect.x + rect.w == backW
