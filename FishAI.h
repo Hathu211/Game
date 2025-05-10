@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "const.h"
+#include <string>
 
 class FishAI {
 private:
@@ -14,6 +15,7 @@ private:
     SDL_RendererFlip flip; 
     static int backW, backH; //gioi han background de AI khong tran
     int pointValue;
+    std::string imagePathAI; 
 
 public:
     FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* imagePathAI = "assets/cavang20.png", float directionAngle = 0.0f, float speed = 3.5f, int pointValue = 20);
@@ -25,5 +27,6 @@ public:
     const SDL_Rect& getRect() const { return rect; } 
     float getAngle() const { return angle; } 
     int getPointValue() const { return pointValue; }
+    std::string getImagePath() const { return imagePathAI; }
 };
 

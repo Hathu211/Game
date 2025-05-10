@@ -1,8 +1,2 @@
-﻿  Game.cpp
-D:\New folder\Game.cpp(186,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\New folder\Game.cpp(201,98): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-D:\New folder\Game.cpp(244,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(305,37): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(360,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(366,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  Score.h
   feeding-frenzy.vcxproj -> D:\New folder\x64\Debug\feeding-frenzy.exe

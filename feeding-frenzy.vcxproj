@@ -152,7 +152,6 @@
     <Image Include="assets\bachtuoc50.png" />
     <Image Include="assets\boss1000.png" />
     <Image Include="assets\bubble.png" />
-    <Image Include="assets\camap.png" />
     <Image Include="assets\camapbig.png" />
     <Image Include="assets\camapsmall.png" />
     <Image Include="assets\cavang20.png" />

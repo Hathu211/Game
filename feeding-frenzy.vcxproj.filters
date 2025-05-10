@@ -88,9 +88,6 @@
     <Image Include="assets\boss1000.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\camap.png">
-      <Filter>assets</Filter>
-    </Image>
     <Image Include="assets\cavang20.png">
       <Filter>assets</Filter>
     </Image>

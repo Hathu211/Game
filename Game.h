@@ -19,14 +19,15 @@ public:
 	bool running;
 	bool isKick = false;
 	Background* background; 
-	Fish* fish; 
+	Fish* fish;
 		//fishAI
 	std::vector<FishAI*> fishAI; 
 	SDL_Texture* fishAITex;
+	std::string imagePathAI;
 		//bubble
 	std::vector<Bubble*> bubbles;
 	Uint32 lastSpawnTime = 0; 
-	Uint32 spawnInterval = 2000; 
+	Uint32 spawnInterval = 1000; 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 		//bossFish
 	SDL_Texture* bossFishTex;

@@ -19,7 +19,8 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 	angle(directionAngle),
 	speed(speed),
 	flip(SDL_FLIP_NONE),
-	pointValue(pointValue)
+	pointValue(pointValue), 
+	imagePathAI(imagePathAI)
 {
 	//dung de lat anh 
 	if (x <= 0) {
@@ -34,8 +35,20 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 	rect.x = x;
 	vx = cosf(angle) * speed; 
 	vy = sinf(angle) * speed;
+		//chon shark dua tren point
+	std::string selectedImage = imagePathAI; 
+	if (imagePathAI == "assets/camapsmall.png" && pointValue >= 140) {
+		selectedImage = "assets/camapbig.png";
+		rect.w = 230; 
+		rect.h = 230; 
+	}
+	else  if (imagePathAI == "assets/camapbig.png" && pointValue <= 140) {
+		selectedImage = "assets/camapsmall.png";
+		rect.w = 150;
+		rect.h = 150; 
+	}
 
-	SDL_Surface* surface = IMG_Load(imagePathAI);
+	SDL_Surface* surface = IMG_Load(selectedImage.c_str());
 	if (!surface) {
 		SDL_Log("IMG_Load failed: %s", IMG_GetError());		
 		textureAI = nullptr; 
