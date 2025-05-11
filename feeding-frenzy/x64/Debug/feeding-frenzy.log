@@ -1,15 +1,9 @@
-﻿  Fish.cpp
-D:\New folder\Fish.cpp(72,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-D:\New folder\Fish.cpp(73,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Game.cpp
-D:\New folder\Game.cpp(102,30): warning C4305: '=': truncation from 'double' to 'float'
-D:\New folder\Game.cpp(166,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(228,37): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(374,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(380,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\New folder\Game.cpp(386,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Score.h
-  main.cpp
-  Generating Code...
+﻿  Game.cpp
+D:\New folder\Game.cpp(149,30): warning C4305: '=': truncation from 'double' to 'float'
+D:\New folder\Game.cpp(233,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\New folder\Game.cpp(296,37): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\New folder\Game.cpp(469,30): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\New folder\Game.cpp(475,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\New folder\Game.cpp(481,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\New folder\Score.h(30,1): warning C4715: 'score::getScoreFishAI': not all control paths return a value
   feeding-frenzy.vcxproj -> D:\New folder\x64\Debug\feeding-frenzy.exe

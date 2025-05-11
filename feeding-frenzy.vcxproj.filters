@@ -16,6 +16,9 @@
     <Filter Include="assets">
       <UniqueIdentifier>{099a5c77-c1e1-4177-8162-eaebbfff6c8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mixer">
+      <UniqueIdentifier>{48dde228-fd30-4557-bf06-58a68dd2cbd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,5 +105,25 @@
     <Font Include="assets\font.ttf">
       <Filter>assets</Filter>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="mixer\background.mp3">
+      <Filter>mixer</Filter>
+    </Media>
+    <Media Include="mixer\click.wav">
+      <Filter>mixer</Filter>
+    </Media>
+    <Media Include="mixer\level_music.mp3">
+      <Filter>mixer</Filter>
+    </Media>
+    <Media Include="mixer\eat.wav">
+      <Filter>mixer</Filter>
+    </Media>
+    <Media Include="mixer\game_over.wav">
+      <Filter>mixer</Filter>
+    </Media>
+    <Media Include="mixer\level_up.wav">
+      <Filter>mixer</Filter>
+    </Media>
   </ItemGroup>
 </Project>

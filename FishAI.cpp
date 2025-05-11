@@ -36,11 +36,11 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 	vx = cosf(angle) * speed; 
 	vy = sinf(angle) * speed;
 		//khoi tao collisionRect
-	float collision = 0.92f;  // tam 92% rect
+	float collision = 0.8f;  // tam 92% rect
 	collisionRect.w = static_cast<int>(w * collision); 
 	collisionRect.h = static_cast<int>(h * collision); 
-	collisionRect.x = x + (w - collisionRect.w) / 2; 
-	collisionRect.y = y + (h - collisionRect.h) / 2; 
+	/*collisionRect.x = x + (w - collisionRect.w) / 2; //di chuyen vug va cham vao tam ca
+	collisionRect.y = y + (h - collisionRect.h) / 2;*/ 
 		//can Rect shark
 	std::string selectedImage = imagePathAI;
 	if (imagePathAI == "assets/camapsmall.png" && pointValue >= 280) {
@@ -49,8 +49,8 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 		rect.h = 270;
 		collisionRect.w = static_cast<int> (270 * collision); 
 		collisionRect.h = static_cast<int>(270 * collision); 
-		collisionRect.x = x + (rect.w - collisionRect.w) / 2; 
-		collisionRect.y = y + (rect.h - collisionRect.h) / 2; 
+		/*collisionRect.x = x + (rect.w - collisionRect.w) / 2; 
+		collisionRect.y = y + (rect.h - collisionRect.h) / 2;*/ 
 	}
 	else  if (imagePathAI == "assets/camapbig.png" && pointValue < 280) {
 		selectedImage = "assets/camapsmall.png";
@@ -58,8 +58,8 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 		rect.h = 140;
 		collisionRect.w = static_cast<int>(140 * collision);
 		collisionRect.h = static_cast<int>(140 * collision);
-		collisionRect.x = x + (rect.w - collisionRect.w) / 2;
-		collisionRect.y = y + (rect.h - collisionRect.h) / 2;
+		/*collisionRect.x = x + (rect.w - collisionRect.w) / 2;
+		collisionRect.y = y + (rect.h - collisionRect.h) / 2;*/
 	}
 	SDL_Surface* surface = IMG_Load(selectedImage.c_str());
 	if (!surface) {

@@ -2,13 +2,14 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <vector>
 #include "Background.h"
 #include "const.h"
 #include "Fish.h"
 #include "FishAI.h"
 #include "Bubble.h"
-#include <SDL_ttf.h>
 #include "Score.h"
 #include "BossFish.h"
 
@@ -40,7 +41,26 @@ public:
 		//level
 	bool overlayActive; 
 	Uint32 overlayStart; 
-	Uint32 overlayLife; 
+	Uint32 overlayLife;
+		//warning
+	bool showWarning; 
+	Uint32 warningStart; 
+	Uint32 warningLife; 
+		//shrk spawn delay
+	bool pendingShark; 
+	Uint32 sharkSpawnTime; 
+	int pendingSharkX, pendingSharkY, pendingSharkW, pendingSharkH; 
+		//shark tam thoi
+	float pendingSharkDirection; 
+	int pendingSharkPointValue; 
+	std::string pendingSharkImage;
+		//mixer
+	Mix_Music* backgroundMusic;
+	Mix_Music* levelMusic;
+	Mix_Chunk* eatFishSound;
+	Mix_Chunk* levelUpSound;
+	Mix_Chunk* gameOverSound;
+
 
 	Game();
 	~Game();
