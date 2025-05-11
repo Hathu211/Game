@@ -80,14 +80,14 @@ void Game::update() {
         int w = 80, h = 82;
         int worldH = background->getHeight();
         int worldW = background->getWidth();
-            //gioi han phia tren
+        //gioi han phia tren
         const int topLimit = worldH - 550;
         const int bottomEdge = worldH;
         if (worldW <= w || worldH <= h) {
             std::cerr << "Invalid world size: worldW = " << worldW << ", worldH" << worldH << std::endl;
             return;
         }
-            //random 2 goc sinh ra ca AI
+        //random 2 goc sinh ra ca AI
         int edge = rand() % 2;
         int x, y;
         float directionAngle;
@@ -101,7 +101,7 @@ void Game::update() {
             y = topLimit + rand() % (bottomEdge - topLimit + 1);
             directionAngle = M_PI;
         }
-            //level 1 + level 2
+        //level 1 + level 2
         if (currentLevel == 1) {
             FishAI* newFishAI = new FishAI(x, y, w, h, renderer, "assets/cavang20.png", score::scoreCavang);
             if (newFishAI) {
@@ -113,13 +113,13 @@ void Game::update() {
             }
         }
         else if (currentLevel == 2) {
-            const char* fishImages[] = { "assets/cavang20.png", "assets/bachtuoc50.png", "assets/camapsmall.png", "assets/camapbig.png" }; 
-            int imageIndex = rand() % 3; 
+            const char* fishImages[] = { "assets/cavang20.png", "assets/bachtuoc50.png", "assets/camapsmall.png", "assets/camapbig.png" };
+            int imageIndex = rand() % 3;
             const char* fishImage = fishImages[imageIndex];
-            int pointValue = (imageIndex == 2) ? score::getRandomSharkScore() : score::getScoreFishAI(fishImage, currentLevel); 
+            int pointValue = (imageIndex == 2) ? score::getRandomSharkScore() : score::getScoreFishAI(fishImage, currentLevel);
             if (imageIndex == 2) {
-                w = (pointValue >= 140) ? 250 : 170; 
-                h = (pointValue >= 140) ? 250 : 170; 
+                w = (pointValue >= 600) ? 270 : 140;
+                h = (pointValue >= 600) ? 270 : 140;
             }
             FishAI* newFishAI = new FishAI(x, y, w, h, renderer, fishImage, directionAngle, 3.5f, pointValue);
             if (newFishAI) {
@@ -129,23 +129,23 @@ void Game::update() {
     }
     fish->move(isKick);
     background->updateCamera(fish->getRect());
-        //su xuat hien cua bossFish
+    //su xuat hien cua bossFish
     int worldW = background->getWidth();
     int worldH = background->getHeight();
     const int topLimit = worldH - 550;
     const int bottomEdge = worldH;
     const int bw = 100, bh = 102;
     const float speed = 3.5f;
-    int levelScore = (currentLevel == 1 ? 40 : 9000); //chon level de render image
+    int levelScore = (currentLevel == 1 ? 50 : 9000); //chon level de render image
     const char* bossImage = (currentLevel == 1 ? "assets/bachtuoc50.png" : "assets/boss1000.png");
     if (!bossSpawned && playerScore > levelScore) {
-        int edge = rand() % 2 ;
+        int edge = rand() % 2;
         int bx = (edge == 0 ? 0 : worldW - bw);
         int by = topLimit + rand() % (bottomEdge - topLimit + 1);
         bossFish.push_back(new BossFish(bx, by, bw, bh, speed, renderer, bossImage));
         bossSpawned = true;
     }
-        //ve boss va cham 
+    //ve boss va cham 
     SDL_Rect playerRect = fish->getRect();
     SDL_Rect headRect = fish->getHeadRect();
     int pcx = playerRect.x + playerRect.w / 2;
@@ -155,7 +155,7 @@ void Game::update() {
         b->updateBoss(pcx, pcy);
         SDL_Rect bRect = b->getRectBoss();
         SDL_Rect intersection;
-            // Nếu head của Player chạm boss
+        // Nếu head của Player chạm boss
         if (SDL_IntersectRect(&headRect, &bRect, &intersection)) {
             int spawnX = intersection.x + intersection.w / 2;
             int spawnY = intersection.y + intersection.h / 2;
@@ -167,7 +167,7 @@ void Game::update() {
                 float speed = 2.0f + (rand() % 3);
                 bubbles.push_back(new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, cosf(angle) * speed, -sinf(angle) * speed, "assets/bubble.png", 50));
             }
-                //LOI DOAN NAY
+            //LOI DOAN NAY
             if (currentLevel == 1 && playerScore >= 100) {
                 fish->grow(1.3f);
                 playerScore += 100;
@@ -201,15 +201,25 @@ void Game::update() {
             continue;
         }
         else {
-            SDL_Rect aiRect = (*ai)->getRect();
-            SDL_Rect pRect = fish->getRect();
+            SDL_Rect aiRect = (*ai)->getCollisionRect();
+            SDL_Rect pRect = fish->getCollisionRect();
             SDL_Rect headRect = fish->getHeadRect();
             SDL_Rect intersection;
             if (SDL_IntersectRect(&headRect, &aiRect, &intersection)) {
                 //tao bubble
                 int spawnX = intersection.x + intersection.w / 2;
                 int spawnY = intersection.y + intersection.h / 2;
-                int numBubbles = 5 + rand() % 5;
+                int numBubbles;
+                int bubbleSize;
+                bool isShark = ((*ai)->getImagePath() == "assets/camapsmall.png" || (*ai)->getImagePath() == "assets/camapbig.png");
+                if (isShark) {
+                    numBubbles = 10 + (rand() % 6);
+                    bubbleSize = 80;
+                }
+                else {
+                    numBubbles = 5 + (rand() % 5);
+                    bubbleSize = 50;
+                }
                 for (int i = 0; i < numBubbles; i++) {
                     int offsetX = rand() % 20 - 10;
                     int offsetY = rand() % 20 - 10;
@@ -222,12 +232,15 @@ void Game::update() {
                     Bubble* bubble = new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, initialVx, initialVy, "assets/bubble.png", 50);
                     bubbles.push_back(bubble);
                 }
-                if ((*ai)->getImagePath() == "assets/camapsmall.png" || (*ai)->getImagePath() == "assets/camapbig.png") {
+                if (isShark) {
                     if ((*ai)->getPointValue() > playerScore) {
                         running = false;
                         delete* ai;
                         ai = fishAI.erase(ai);
                         continue;
+                    }
+                    else {
+                        fish->grow(1.7f);
                     }
                 }
                 playerScore += (*ai)->getPointValue();
@@ -274,8 +287,8 @@ void Game::render() {
     //ve scoreAI + AI
     for (auto ai : fishAI) {
         ai->render(cam);
-        SDL_Rect aiWorld = ai->getRect();
-        SDL_Rect aiScreen = { aiWorld.x - cam.x, aiWorld.y - cam.y, aiWorld.w, aiWorld.h };
+        SDL_Rect aiCollisionRect = ai->getCollisionRect();
+        SDL_Rect aiScreen = { aiCollisionRect.x - cam.x, aiCollisionRect.y - cam.y, aiCollisionRect.w, aiCollisionRect.h };
         SDL_Color white = { 255,255,255,255 };
         //string aiScoreText = to_string(score::getScoreLevel1(currentLevel));
         string aiScoreText = to_string(ai->getPointValue());

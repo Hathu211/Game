@@ -7,13 +7,14 @@ class Fish {
 private:
     SDL_Renderer* renderer; 
     SDL_Rect rect;
+    SDL_Rect  collisionRect; //thu nho vung va cham
     int speed;
     SDL_Texture* textureFish;
     int targetX, targetY;
     double angle;
     int worldW, worldH;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
-    int offsetX, offsetY; 
+    //int offsetX, offsetY; 
     
 
 public:
@@ -26,6 +27,7 @@ public:
     const SDL_Rect& getRect() const { return rect; }
     void grow(float bigSize);
     SDL_Rect getHeadRect() const;
+    const SDL_Rect& getCollisionRect() const { return collisionRect; }
 
     ~Fish();
 };

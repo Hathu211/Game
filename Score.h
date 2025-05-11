@@ -5,7 +5,7 @@ namespace score {
 	constexpr int scoreCavang = 20;
 	constexpr int scoreBachtuoc = 50;
 	inline int getRandomSharkScore() {
-		return 130 + (rand() % 671);
+		return 400 + (rand() % 701);
 	} 
 	inline int getScoreLevel1(int level) {
 		switch (level) {

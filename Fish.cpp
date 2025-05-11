@@ -11,6 +11,12 @@ Fish::Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const 
     rect = { x,y,w,h };
     targetX = x + w / 2;
     targetY = y + h / 2;
+        //khoi tao collision
+    float collision = 0.92f; 
+    collisionRect.w = static_cast<int>(w * collision);
+    collisionRect.h = static_cast<int>(h * collision);
+    collisionRect.x = x + (w - collisionRect.w) / 2;
+    collisionRect.y = y + (h - collisionRect.h) / 2;
 
     SDL_Surface* surface = IMG_Load(imageFish);
     if (!surface) {
@@ -33,7 +39,12 @@ void Fish::grow(float bigSize) {
     rect.w = static_cast<int>(rect.w * bigSize); 
     rect.h = static_cast<int>(rect.h * bigSize); 
     rect.x = cx - rect.w / 2;
-    rect.y = cy - rect.h / 2; 
+    rect.y = cy - rect.h / 2;
+    float collision = 0.92f;
+    collisionRect.w = static_cast<int>(rect.w * collision);
+    collisionRect.h = static_cast<int>(rect.h * collision);
+    collisionRect.x = rect.x + (rect.w - collisionRect.w) / 2;
+    collisionRect.y = rect.y + (rect.h - collisionRect.h) / 2;
 }
 
 SDL_Rect Fish::getHeadRect() const {
@@ -61,10 +72,8 @@ void Fish::move(bool isKick) {
     float dx = targetX - (rect.x + rect.w / 2);
     float dy = targetY - (rect.y + rect.h / 2);
     flip = (dy < 0) ? SDL_FLIP_VERTICAL : SDL_FLIP_HORIZONTAL; //cap nhat lat theo Oy
-
     float dist = std::sqrt(dx * dx + dy * dy);
     if (dist < 1.0f) return;
-
     double targetAngle = std::atan2(dy, dx) * 180.0 / M_PI;
     double diff = targetAngle - angle;
     if (diff > 180) diff -= 360;
@@ -73,11 +82,9 @@ void Fish::move(bool isKick) {
     if (diff > maxA) diff = maxA;
     else if (diff < -maxA) diff = -maxA;
     angle += diff;
-
     float vel = speed / 55.0f;
     rect.x += static_cast<int>((dx / dist) * vel);
     rect.y += static_cast<int>((dy / dist) * vel);
-
     if (rect.x < 0) rect.x = 0;
     if (rect.x + rect.w > worldW) rect.x = worldW  - rect.w;
     const int topLimit = worldH - 550; //day tren ca window 550 pixel
@@ -86,6 +93,8 @@ void Fish::move(bool isKick) {
         rect.y = topLimit;           
     if (rect.y + rect.h > bottomEdge)   
         rect.y = bottomEdge - rect.h;
+    collisionRect.x = rect.x + (rect.w - collisionRect.w) / 2;
+    collisionRect.y = rect.y + (rect.h - collisionRect.h) / 2;
 }
 
 Fish::~Fish() {

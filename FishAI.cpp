@@ -35,19 +35,32 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 	rect.x = x;
 	vx = cosf(angle) * speed; 
 	vy = sinf(angle) * speed;
-		//chon shark dua tren point
-	std::string selectedImage = imagePathAI; 
-	if (imagePathAI == "assets/camapsmall.png" && pointValue >= 140) {
+		//khoi tao collisionRect
+	float collision = 0.92f;  // tam 92% rect
+	collisionRect.w = static_cast<int>(w * collision); 
+	collisionRect.h = static_cast<int>(h * collision); 
+	collisionRect.x = x + (w - collisionRect.w) / 2; 
+	collisionRect.y = y + (h - collisionRect.h) / 2; 
+		//can Rect shark
+	std::string selectedImage = imagePathAI;
+	if (imagePathAI == "assets/camapsmall.png" && pointValue >= 280) {
 		selectedImage = "assets/camapbig.png";
-		rect.w = 230; 
-		rect.h = 230; 
+		rect.w = 270;
+		rect.h = 270;
+		collisionRect.w = static_cast<int> (270 * collision); 
+		collisionRect.h = static_cast<int>(270 * collision); 
+		collisionRect.x = x + (rect.w - collisionRect.w) / 2; 
+		collisionRect.y = y + (rect.h - collisionRect.h) / 2; 
 	}
-	else  if (imagePathAI == "assets/camapbig.png" && pointValue <= 140) {
+	else  if (imagePathAI == "assets/camapbig.png" && pointValue < 280) {
 		selectedImage = "assets/camapsmall.png";
-		rect.w = 150;
-		rect.h = 150; 
+		rect.w = 140;
+		rect.h = 140;
+		collisionRect.w = static_cast<int>(140 * collision);
+		collisionRect.h = static_cast<int>(140 * collision);
+		collisionRect.x = x + (rect.w - collisionRect.w) / 2;
+		collisionRect.y = y + (rect.h - collisionRect.h) / 2;
 	}
-
 	SDL_Surface* surface = IMG_Load(selectedImage.c_str());
 	if (!surface) {
 		SDL_Log("IMG_Load failed: %s", IMG_GetError());		
@@ -65,6 +78,8 @@ FishAI::FishAI(int x, int y, int w, int h, SDL_Renderer* renderer, const char* i
 bool FishAI::update() {
 	rect.x += static_cast<int>(vx);
 	rect.y += static_cast<int>(vy);
+	collisionRect.x = rect.x + (rect.w - collisionRect.w) / 2; 
+	collisionRect.y = rect.y + (rect.h - collisionRect.h) / 2; 
 
 	if (rect.x < 0)
 		rect.x = 0;
