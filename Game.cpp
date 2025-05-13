@@ -42,10 +42,15 @@ Game::Game() {
     if (!gameOverSound) {
         cerr << "Failed to load game over sound: " << Mix_GetError() << endl;
     }
+    clickSound = Mix_LoadWAV("mixer/click.wav");
+    if (!clickSound) {
+        cerr << "Failed to load click sound: " << Mix_GetError() << endl;
+    }
     Mix_VolumeMusic(64); // Âm lượng nhạc nền (0-128)
     Mix_VolumeChunk(eatFishSound, 80);
     Mix_VolumeChunk(levelUpSound, 80);
     Mix_VolumeChunk(gameOverSound, 80);
+    Mix_VolumeChunk(clickSound, 80);
     if (backgroundMusic) {
         Mix_PlayMusic(backgroundMusic, -1); //vong lap vo han 
     }
@@ -66,12 +71,15 @@ Game::Game() {
         running = false;
         return;
     }
+    gameState = MENU; 
+    selectedOption = -1; 
+    running = true; 
     currentLevel = 1; 
     playerScore = 0; 
     bossSpawned = false;
     showWarning = false; 
     warningStart = 0; 
-    warningLife = 2200; //doi 2s + life 1,2s
+    warningLife = 600; //doi 2s + life 1,2s
     pendingShark = false; 
     sharkSpawnTime = 0; 
     pendingSharkX = 0; 
@@ -101,6 +109,13 @@ Game::Game() {
         cerr << "invalid renderer " << SDL_GetError() << endl;
         running = false;
     }
+        //menu
+    menu = new Menu(renderer, clickSound, &isMusicOn); 
+    if (!menu) {
+        cerr << "Failed" << endl; 
+        running = false; 
+        return; 
+    }
         //level Back
     std::vector<std::string> backLevel = { "assets/level1Back.png", "assets/level2Back.png" };
     background = new Background(renderer, SCREEN_WIDTH, SCREEN_HEIGHT, "assets/nen.png");
@@ -111,7 +126,7 @@ Game::Game() {
     int worldW = background->getWidth();
     int worldH = background->getHeight();
     std::cout << "worldW = " << worldW << ", worldH = " << worldH << std::endl; //in ra terminal kiem tra worldW and worldH co loi khong, = 0; loi 
-    fish = new Fish(180, 260, 85, 82, 150, renderer, "assets/fish.png", worldW, worldH);
+    fish = new Fish(180, 260, 100, 100, 150, renderer, "assets/fish.png", worldW, worldH);
 
 	FishAI::InitScreenSize(worldW, worldH);
 	fishAI.push_back(new FishAI( 0, 100, 80, 82, renderer, "assets/cavang20.png", 0.0f, 3.5f, score::getScoreFishAI(imagePathAI,currentLevel)));
@@ -165,10 +180,10 @@ void Game::update() {
             const char* fishImage = fishImages[imageIndex];
             int pointValue = (imageIndex == 2 || imageIndex == 3) ? score::getRandomSharkScore() : score::getScoreFishAI(fishImage, currentLevel);
             if (imageIndex == 2 || imageIndex == 3) {
-                w = (pointValue >= 600) ? 270 : 140;
-                h = (pointValue >= 600) ? 270 : 140;
-                pendingShark = true; 
-                sharkSpawnTime = now + 2000; 
+                w = (pointValue >= 600) ? 230 : 140;
+                h = (pointValue >= 600) ? 230 : 140;
+                pendingShark = true;
+                sharkSpawnTime = now + 1200;
                 pendingSharkX = x;
                 pendingSharkY = y;
                 pendingSharkW = w;
@@ -188,11 +203,11 @@ void Game::update() {
         }
     }
     if (pendingShark && now >= sharkSpawnTime) {
-        FishAI* newFishAI = new FishAI(pendingSharkX, pendingSharkY, pendingSharkW, pendingSharkH, renderer, pendingSharkImage.c_str(), pendingSharkDirection, 3.5f, pendingSharkPointValue); 
+        FishAI* newFishAI = new FishAI(pendingSharkX, pendingSharkY, pendingSharkW, pendingSharkH, renderer, pendingSharkImage.c_str(), pendingSharkDirection, 3.5f, pendingSharkPointValue);
         if (newFishAI) {
             fishAI.push_back(newFishAI);
         }
-        pendingShark = false; 
+        pendingShark = false;
     }
     fish->move(isKick);
     background->updateCamera(fish->getRect());
@@ -203,7 +218,7 @@ void Game::update() {
     const int bottomEdge = worldH;
     const int bw = 100, bh = 102;
     const float speed = 3.5f;
-    int levelScore = (currentLevel == 1 ? 50 : 9000); //chon level de render image
+    int levelScore = (currentLevel == 1 ? 50 : 1000); //chon level de render image
     const char* bossImage = (currentLevel == 1 ? "assets/bachtuoc50.png" : "assets/boss1000.png");
     if (!bossSpawned && playerScore > levelScore) {
         int edge = rand() % 2;
@@ -235,202 +250,212 @@ void Game::update() {
                 bubbles.push_back(new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, cosf(angle) * speed, -sinf(angle) * speed, "assets/bubble.png", 50));
             }
             if (currentLevel == 1 && playerScore >= 100) {
-                fish->grow(1.3f);
+                fish->grow(1.4f);
                 playerScore += 100;
                 delete b;
                 it = bossFish.erase(it);
-                Mix_PlayChannel(-1, levelUpSound, 0); //phat am thanh level up
+                if (isMusicOn) Mix_PlayChannel(-1, levelUpSound, 0); //phat am thanh level up
                 nextLevel();
                 return;
             }
-            else if (currentLevel == 2 && playerScore >= 200) {
-                fish->grow(1.5f);
-                playerScore += 1000;
-                delete b;
-                it = bossFish.erase(it);
-                nextLevel();
-                return;
+            else if (currentLevel == 2 && playerScore >= 2500) {
+                    fish->grow(1.0f);
+                    playerScore += 2500;
+                    delete b;
+                    it = bossFish.erase(it);
+                    return;
+                }
+                else {
+                    running = false; // boss mạnh hơn → game over
+                    if (isMusicOn) Mix_PlayChannel(-1, gameOverSound, 0); 
+                    return;
+                }
             }
             else {
-                running = false;  // boss mạnh hơn → game over
-                Mix_PlayChannel(-1, gameOverSound, 0); 
-                return;
+                ++it;
             }
         }
-        else {
-            ++it;
-        }
-    }
-    //lay Rect o headFish va xu ly va cham voi fishAI
-    for (auto ai = fishAI.begin(); ai != fishAI.end(); ) {
-        if (!(*ai)->update()) {
-            delete* ai;
-            ai = fishAI.erase(ai);
-            continue;
-        }
-        else {
-            SDL_Rect aiRect = (*ai)->getCollisionRect();
-            SDL_Rect pRect = fish->getCollisionRect();
-            SDL_Rect headRect = fish->getHeadRect();
-            SDL_Rect intersection;
-            if (SDL_IntersectRect(&headRect, &aiRect, &intersection)) {
-                //tao bubble
-                int spawnX = intersection.x + intersection.w / 2;
-                int spawnY = intersection.y + intersection.h / 2;
-                int numBubbles;
-                int bubbleSize;
-                bool isShark = ((*ai)->getImagePath() == "assets/camapsmall.png" || (*ai)->getImagePath() == "assets/camapbig.png");
-                if (isShark) {
-                    numBubbles = 20 + (rand() % 6);
-                    bubbleSize = 100;
-                }
-                else {
-                    numBubbles = 5 + (rand() % 5);
-                    bubbleSize = 50;
-                }
-                for (int i = 0; i < numBubbles; i++) {
-                    int offsetX = rand() % 20 - 10;
-                    int offsetY = rand() % 20 - 10;
-                    int bx = spawnX + offsetX;
-                    int by = spawnY + offsetY;
-                    float randAngle = (rand() % 360) * M_PI / 180.0;
-                    float speed = 2.0f + (rand() % 3);
-                    float initialVx = cosf(randAngle) * speed;
-                    float initialVy = -sinf(randAngle) * speed;
-                    Bubble* bubble = new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, initialVx, initialVy, "assets/bubble.png", 50);
-                    bubbles.push_back(bubble);
-                }
-                if (isShark) {
-                    if ((*ai)->getPointValue() > playerScore) {
-                        running = false;
-                        Mix_PlayChannel(-1, gameOverSound, 0); 
-                        delete* ai;
-                        ai = fishAI.erase(ai);
-                        continue;
-                    }
-                    else {
-                        fish->grow(1.7f);
-                        Mix_PlayChannel(-1, eatFishSound, 0); 
-                    }
-                }
-                else {
-                    Mix_PlayChannel(-1, eatFishSound, 0); 
-                }
-                playerScore += (*ai)->getPointValue();
+        //lay Rect o headFish va xu ly va cham voi fishAI
+        for (auto ai = fishAI.begin(); ai != fishAI.end(); ) {
+            if (!(*ai)->update()) {
                 delete* ai;
                 ai = fishAI.erase(ai);
+                continue;
             }
             else {
-                ++ai;
+                SDL_Rect aiRect = (*ai)->getRect();
+                SDL_Rect pRect = fish->getCollisionRect();
+                SDL_Rect headRect = fish->getHeadRect();
+                SDL_Rect intersection;
+                if (SDL_IntersectRect(&headRect, &aiRect, &intersection)) {
+                    //tao bubble
+                    int spawnX = intersection.x + intersection.w / 2;
+                    int spawnY = intersection.y + intersection.h / 2;
+                    int numBubbles;
+                    int bubbleSize;
+                    bool isShark = ((*ai)->getImagePath() == "assets/camapsmall.png" || (*ai)->getImagePath() == "assets/camapbig.png");
+                    if (isShark) {
+                        numBubbles = 20 + (rand() % 6);
+                        bubbleSize = 100;
+                    }
+                    else {
+                        numBubbles = 5 + (rand() % 5);
+                        bubbleSize = 50;
+                    }
+                    for (int i = 0; i < numBubbles; i++) {
+                        int offsetX = rand() % 20 - 10;
+                        int offsetY = rand() % 20 - 10;
+                        int bx = spawnX + offsetX;
+                        int by = spawnY + offsetY;
+                        float randAngle = (rand() % 360) * M_PI / 180.0;
+                        float speed = 2.0f + (rand() % 3);
+                        float initialVx = cosf(randAngle) * speed;
+                        float initialVy = -sinf(randAngle) * speed;
+                        Bubble* bubble = new Bubble(renderer, spawnX + offsetX, spawnY + offsetY, initialVx, initialVy, "assets/bubble.png", 50);
+                        bubbles.push_back(bubble);
+                    }
+                    if (isShark) {
+                        if ((*ai)->getPointValue() > playerScore) {
+                            running = false;
+                            Mix_PlayChannel(-1, gameOverSound, 0);
+                            //SDL_Delay(900);
+                            delete* ai;
+                            ai = fishAI.erase(ai);
+                            continue;
+                        }
+                        else {
+                            if (currentLevel != 2 || !sharkGrow) {
+                                fish->grow(1.4f);
+                                sharkGrow = true;
+                            }
+                            if (isMusicOn) Mix_PlayChannel(-1, eatFishSound, 0);
+                        }
+                    }
+                    else {
+                        if (isMusicOn) Mix_PlayChannel(-1, eatFishSound, 0);
+                    }
+                    playerScore += (*ai)->getPointValue();
+                    delete* ai;
+                    ai = fishAI.erase(ai);
+                }
+                else {
+                    ++ai;
+                }
             }
         }
-    }
-    for (auto it = bubbles.begin(); it != bubbles.end(); ) {
-        if (!(*it)->updateBubble(now)) {
-            delete* it;
-            it = bubbles.erase(it);
+        for (auto it = bubbles.begin(); it != bubbles.end(); ) {
+            if (!(*it)->updateBubble(now)) {
+                delete* it;
+                it = bubbles.erase(it);
+            }
+            else {
+                ++it;
+            }
         }
-        else {
-            ++it;
+        if (showWarning && (now - warningStart >= warningLife)) {
+            showWarning = false;
         }
     }
-    if (showWarning && (now - warningStart >= warningLife)) {
-        showWarning = false; 
-    }
-}
 
 void Game::render() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-    background->render();
-    SDL_Rect cam = background->getCamera(); //ve xong back
+    if (gameState == MENU) {
+        menu->render(selectedOption);
+    }
+    else if (gameState == PLAYING) {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+        background->render();
+        SDL_Rect cam = background->getCamera(); //ve xong back
 
-    //ve fishPlayer + score
-    SDL_Rect wr = fish->getRect();
-    SDL_Rect dr = { wr.x - cam.x, wr.y - cam.y, wr.w, wr.h };
-    SDL_RenderCopyEx(renderer, fish->getTexture(), nullptr, &dr, fish->getAngle(), nullptr, SDL_FLIP_NONE);
-    SDL_Color white = { 255,255,255,255 };
-    string playerScoreText = to_string(playerScore); // ta can chuyen score thanh string, vi ttf can string 
-    SDL_Surface* scoreSurface = TTF_RenderText_Solid(scoreFont, playerScoreText.c_str(), white);
-    SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
-    int textH, textW;
-    SDL_QueryTexture(scoreTexture, nullptr, nullptr, &textW, &textH);
-    SDL_Rect scorePlayer = { dr.x + dr.w / 2 - textW / 2, dr.y - textH - 10, textW, textH };
-    SDL_FreeSurface(scoreSurface);
-    SDL_RenderCopy(renderer, scoreTexture, nullptr, &scorePlayer);
-    SDL_DestroyTexture(scoreTexture);
-
-    //ve scoreAI + AI
-    for (auto ai : fishAI) {
-        ai->render(cam);
-        SDL_Rect aiRect = ai->getRect();
-        SDL_Rect aiScreen = { aiRect.x - cam.x, aiRect.y - cam.y, aiRect.w, aiRect.h };
+        //ve fishPlayer + score
+        SDL_Rect wr = fish->getRect();
+        SDL_Rect dr = { wr.x - cam.x, wr.y - cam.y, wr.w, wr.h };
+        SDL_RenderCopyEx(renderer, fish->getTexture(), nullptr, &dr, fish->getAngle(), nullptr, SDL_FLIP_NONE);
         SDL_Color white = { 255,255,255,255 };
-        string aiScoreText = to_string(ai->getPointValue());
-        SDL_Surface* aiSurface = TTF_RenderText_Solid(scoreFont, aiScoreText.c_str(),white);
-        SDL_Texture* aiTexture = SDL_CreateTextureFromSurface(renderer, aiSurface);
-        int textW, textH;
-        SDL_QueryTexture(aiTexture, nullptr, nullptr, &textW, &textH);
-        SDL_Rect aiScoreAI = { aiScreen.x + aiScreen.w / 2 - textW / 2, aiScreen.y - textH - 5, textW, textH };
-        SDL_FreeSurface(aiSurface);
-        SDL_RenderCopy(renderer, aiTexture, nullptr, &aiScoreAI);
-        SDL_DestroyTexture(aiTexture);
-    } 
-    //ve score bossFish
-    for (auto b : bossFish) {
-        b->render(background->getCamera());
-        SDL_Color blue = { 0, 255, 255, 255 };
-        std::string text = (currentLevel == 1) ? "100" : "1000";
-        SDL_Surface* surf = TTF_RenderText_Solid(scoreFont, text.c_str(), blue);
-        SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
-        int w, h; SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
-        SDL_Rect r = b->getRectBoss();
-        SDL_Rect dst = { r.x - cam.x + r.w / 2 - w / 2,r.y - cam.y - h - 5, w, h };
-        SDL_FreeSurface(surf);
-        SDL_RenderCopy(renderer, tex, nullptr, &dst);
-        SDL_DestroyTexture(tex);
-    }
-    for (auto bubble : bubbles) {
-        bubble->renderBubble(cam); 
-    }
+        string playerScoreText = to_string(playerScore); // ta can chuyen score thanh string, vi ttf can string 
+        SDL_Surface* scoreSurface = TTF_RenderText_Solid(scoreFont, playerScoreText.c_str(), white);
+        SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
+        int textH, textW;
+        SDL_QueryTexture(scoreTexture, nullptr, nullptr, &textW, &textH);
+        SDL_Rect scorePlayer = { dr.x + dr.w / 2 - textW / 2, dr.y - textH - 10, textW, textH };
+        SDL_FreeSurface(scoreSurface);
+        SDL_RenderCopy(renderer, scoreTexture, nullptr, &scorePlayer);
+        SDL_DestroyTexture(scoreTexture);
+
+        //ve scoreAI + AI
+        for (auto ai : fishAI) {
+            ai->render(cam);
+            SDL_Rect aiRect = ai->getRect();
+            SDL_Rect aiScreen = { aiRect.x - cam.x, aiRect.y - cam.y, aiRect.w, aiRect.h };
+            SDL_Color white = { 255,255,255,255 };
+            string aiScoreText = to_string(ai->getPointValue());
+            SDL_Surface* aiSurface = TTF_RenderText_Solid(scoreFont, aiScoreText.c_str(), white);
+            SDL_Texture* aiTexture = SDL_CreateTextureFromSurface(renderer, aiSurface);
+            int textW, textH;
+            SDL_QueryTexture(aiTexture, nullptr, nullptr, &textW, &textH);
+            SDL_Rect aiScoreAI = { aiScreen.x + aiScreen.w / 2 - textW / 2, aiScreen.y - textH - 5, textW, textH };
+            SDL_FreeSurface(aiSurface);
+            SDL_RenderCopy(renderer, aiTexture, nullptr, &aiScoreAI);
+            SDL_DestroyTexture(aiTexture);
+        }
+        //ve score bossFish
+        for (auto b : bossFish) {
+            b->render(background->getCamera());
+            SDL_Color blue = { 0, 255, 255, 255 };
+            std::string text = (currentLevel == 1) ? "100" : "2500";
+            SDL_Surface* surf = TTF_RenderText_Solid(scoreFont, text.c_str(), blue);
+            SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surf);
+            int w, h; SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
+            SDL_Rect r = b->getRectBoss();
+            SDL_Rect dst = { r.x - cam.x + r.w / 2 - w / 2,r.y - cam.y - h - 5, w, h };
+            SDL_FreeSurface(surf);
+            SDL_RenderCopy(renderer, tex, nullptr, &dst);
+            SDL_DestroyTexture(tex);
+        }
+        for (auto bubble : bubbles) {
+            bubble->renderBubble(cam);
+        }
         //ve warning
-    if (showWarning) {
-        SDL_Color red{ 255,0,0,255 }; 
-        string warningText = "Warning !!!"; 
-        SDL_Surface* warningSurface = TTF_RenderText_Solid(scoreFont, warningText.c_str(), red); 
-        SDL_Texture* warningTexture = SDL_CreateTextureFromSurface(renderer, warningSurface);
-        int textH, textW; 
-        SDL_QueryTexture(warningTexture, nullptr, nullptr, &textW, &textH);
-        SDL_Rect warningRect = { (SCREEN_WIDTH - textW) / 2, (SCREEN_HEIGHT - textH) / 2, textW, textH }; // Vẽ ở giữa trên cùng
-        SDL_FreeSurface(warningSurface);
-        SDL_RenderCopy(renderer, warningTexture, nullptr, &warningRect);
-        SDL_DestroyTexture(warningTexture);
-    }
+        if (showWarning) {
+            SDL_Color red{ 255, 0, 0, 255 };
+            string warningText = "WARNING !!!";
+            SDL_Surface* warningSurface = TTF_RenderText_Solid(scoreFont, warningText.c_str(), red);
+            SDL_Texture* warningTexture = SDL_CreateTextureFromSurface(renderer, warningSurface);
+            int textH, textW;
+            SDL_QueryTexture(warningTexture, nullptr, nullptr, &textW, &textH);
+            int screenW = SCREEN_WIDTH;
+            SDL_Rect warningRect = { (screenW - textW) / 2, 20, textW, textH }; 
+            SDL_FreeSurface(warningSurface);
+            SDL_RenderCopy(renderer, warningTexture, nullptr, &warningRect);
+            SDL_DestroyTexture(warningTexture);
+        }
+
         //ve level 
     //background->renderBackLevel(currentLevel); 
-    if (overlayActive) {
-        Uint32 now = SDL_GetTicks(); 
-        Uint32 e = now - overlayStart; 
-        if (e < overlayLife) {
-            SDL_Texture* ov = background->getoverLays(currentLevel);
-            if (ov) {
-                float t = float(e) / overlayLife;
-                t *= 2.0f; //tgian mờ nhanh hơn 
-                if (t > 1.0f) t = 1.0f;
-                Uint8 alpha = Uint8(255 * (1.0f - t));
-                SDL_SetTextureAlphaMod(ov, alpha);
-                int ow = SCREEN_WIDTH / 30;
-                int oh = SCREEN_HEIGHT / 60; 
-                SDL_QueryTexture(ov, nullptr, nullptr,&ow , &oh);
-                SDL_Rect dst = { (SCREEN_WIDTH - ow) / 2, (SCREEN_HEIGHT - oh) / 2,ow, oh };
-                SDL_RenderCopy(renderer, ov, nullptr, &dst);
-            }
-            else {
-                overlayActive = false; 
+        if (overlayActive) {
+            Uint32 now = SDL_GetTicks();
+            Uint32 e = now - overlayStart;
+            if (e < overlayLife) {
+                SDL_Texture* ov = background->getoverLays(currentLevel);
+                if (ov) {
+                    float t = float(e) / overlayLife;
+                    t *= 2.0f; //tgian mờ nhanh hơn 
+                    if (t > 1.0f) t = 1.0f;
+                    Uint8 alpha = Uint8(255 * (1.0f - t));
+                    SDL_SetTextureAlphaMod(ov, alpha);
+                    int ow = SCREEN_WIDTH / 30;
+                    int oh = SCREEN_HEIGHT / 60;
+                    SDL_QueryTexture(ov, nullptr, nullptr, &ow, &oh);
+                    SDL_Rect dst = { (SCREEN_WIDTH - ow) / 2, (SCREEN_HEIGHT - oh) / 2,ow, oh };
+                    SDL_RenderCopy(renderer, ov, nullptr, &dst);
+                }
+                else {
+                    overlayActive = false;
+                }
             }
         }
-    }
-    SDL_RenderPresent(renderer); 
+    SDL_RenderPresent(renderer);
+    }  
 }
 
 void Game::nextLevel() {
@@ -446,13 +471,13 @@ void Game::nextLevel() {
     overlayStart = SDL_GetTicks(); 
     showWarning = false; 
     pendingShark = false; 
+    sharkGrow = false;
 
         //nhac chuyen level
-    if (levelMusic) {
+    if (isMusicOn && levelMusic) {
         Mix_HaltMusic(); //dung nhac nen
         Mix_PlayMusic( levelMusic, 0); //phat nhac, channel: phat sound
     }
-
     int worldW = background->getWidth(); 
     int worldH = background->getHeight(); 
     const int topLimit = worldH - 550; 
@@ -480,15 +505,15 @@ void Game::nextLevel() {
         y = topLimit + rand() % (bottomEdge - topLimit - h);
         directionAngle = (edge == 0 ? 0.0f : M_PI);
         int pointValue = score::getRandomSharkScore(); // Định nghĩa pointValue
-        w = (pointValue >= 600) ? 270 : 140;
-        h = (pointValue >= 600) ? 270 : 140;
+        w = (pointValue >= 600) ? 230 : 140;
+        h = (pointValue >= 600) ? 230 : 140;
         fishAI.push_back(new FishAI(x, y, w, h, renderer, "assets/camapsmall.png", directionAngle, 3.5f, score::getRandomSharkScore()));
         pendingShark = true;
         sharkSpawnTime = SDL_GetTicks() + 2000; // Trì hoãn 2 giây
         pendingSharkX = x;
         pendingSharkY = y;
-        pendingSharkW = w;
-        pendingSharkH = h;
+        pendingSharkW = w - 100 ;
+        pendingSharkH = h - 100;
         pendingSharkDirection = directionAngle;
         pendingSharkPointValue = pointValue ;
         pendingSharkImage = "assets/camapsmall.png";
@@ -497,27 +522,63 @@ void Game::nextLevel() {
     }
 }
 
-void Game::handleEvents(SDL_Event& e) {
-    SDL_Rect cam = background->getCamera();
-
-    if (e.type == SDL_QUIT) {
-        running = false;
-    }
-    else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
-        int worldX = e.button.x + cam.x;
-        int worldY = e.button.y + cam.y;
-        SDL_Rect r = fish->getRect();
-        if (worldX >= r.x && worldX <= r.x + r.w && worldY >= r.y && worldY <= r.y + r.h) {
-            isKick = true;
+void Game::handleEvents(SDL_Event& event) {
+    if (gameState == MENU) {
+        int action = menu->handleEvents(event); 
+        switch (action) {
+        case 1: //PLAY
+            gameState = PLAYING;
+            Mix_HaltMusic(); 
+            if (isMusicOn && levelMusic) {
+                Mix_PlayMusic(levelMusic, -1);
+            }
+            //selectedOption = -1;
+            currentLevel = 1;
+            playerScore = 0;
+            fishAI.clear();
+            bossFish.clear();
+            bubbles.clear();
+            bossSpawned = false;
+            overlayActive = true;
+            overlayStart = SDL_GetTicks();
+            fish->reset(180, 260, 85, 82);
+            break; 
+        case 2: 
+            isMusicOn = !isMusicOn; 
+            if (isMusicOn) {
+                Mix_ResumeMusic(); 
+            }
+            else {
+                Mix_HaltMusic(); 
+            }
+            selectedOption = -1;
+            break;
+        case 3: // QUIT
+            running = false;
+            break;
         }
     }
-    else if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_LEFT) {
-        isKick = false;
-    }
-    else if (e.type == SDL_MOUSEMOTION && isKick) {
-        int worldX = e.motion.x + cam.x;
-        int worldY = e.motion.y + cam.y;
-        fish->setTarget(worldX, worldY);
+    else if (gameState == PLAYING) {
+        SDL_Rect cam = background->getCamera();
+        if (event.type == SDL_QUIT) {
+            running = false;
+        }
+        else if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT) {
+            int worldX = event.button.x + cam.x;
+            int worldY = event.button.y + cam.y;
+            SDL_Rect r = fish->getRect();
+            if (worldX >= r.x && worldX <= r.x + r.w && worldY >= r.y && worldY <= r.y + r.h) {
+                isKick = true;
+            }
+        }
+        else if (event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT) {
+            isKick = false;
+        }
+        else if (event.type == SDL_MOUSEMOTION && isKick) {
+            int worldX = event.motion.x + cam.x;
+            int worldY = event.motion.y + cam.y;
+            fish->setTarget(worldX, worldY);
+        }
     }
 }
 
@@ -531,14 +592,18 @@ void Game::run() {
         background->updateCamera(fish->getRect());
         update(); 
         render();
-        if (!Mix_PlayingMusic() && backgroundMusic) {
-            Mix_PlayMusic(backgroundMusic, -1); 
+        if (isMusicOn && !Mix_PlayingMusic() && backgroundMusic) {
+            Mix_PlayMusic(backgroundMusic, -1);
         }
+        /*if (!Mix_PlayingMusic() && backgroundMusic) {
+            Mix_PlayMusic(backgroundMusic, -1); 
+        }*/
         SDL_Delay(15);
     }
 }
 
 Game::~Game() {
+    delete menu; 
     if (backgroundMusic) {
         Mix_FreeMusic(backgroundMusic);
     }
@@ -566,5 +631,7 @@ Game::~Game() {
         TTF_CloseFont(scoreFont); 
     }
     IMG_Quit();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
 }

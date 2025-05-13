@@ -137,6 +137,7 @@
     <ClCompile Include="FishAI.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Score.h" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="Fish.h" />
     <ClInclude Include="FishAI.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Menu.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bachtuoc50.png" />
@@ -158,6 +160,7 @@
     <Image Include="assets\fish.png" />
     <Image Include="assets\level1Back.png" />
     <Image Include="assets\level2Back.png" />
+    <Image Include="assets\menu.png" />
     <Image Include="assets\nen.png" />
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,7 @@ public:
     void grow(float bigSize);
     SDL_Rect getHeadRect() const;
     const SDL_Rect& getCollisionRect() const { return collisionRect; }
+    void reset(int x, int y, int w, int h); 
 
     ~Fish();
 };

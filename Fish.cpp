@@ -11,13 +11,6 @@ Fish::Fish(int x, int y, int w, int h, int speed, SDL_Renderer* renderer, const 
     rect = { x,y,w,h };
     targetX = x + w / 2;
     targetY = y + h / 2;
-        //khoi tao collision
-    float collision = 0.8f; 
-    collisionRect.w = static_cast<int>(w * collision);
-    collisionRect.h = static_cast<int>(h * collision);
-    /*collisionRect.x = x + (w - collisionRect.w) / 2;
-    collisionRect.y = y + (h - collisionRect.h) / 2;*/
-
     SDL_Surface* surface = IMG_Load(imageFish);
     if (!surface) {
         std::cerr << "Failed to load fish image: " << IMG_GetError() << std::endl;
@@ -40,11 +33,17 @@ void Fish::grow(float bigSize) {
     rect.h = static_cast<int>(rect.h * bigSize); 
     rect.x = cx - rect.w / 2;
     rect.y = cy - rect.h / 2;
-    float collision = 0.8f;
-    collisionRect.w = static_cast<int>(rect.w * collision);
-    collisionRect.h = static_cast<int>(rect.h * collision);
-    /*collisionRect.x = rect.x + (rect.w - collisionRect.w) / 2;
-    collisionRect.y = rect.y + (rect.h - collisionRect.h) / 2;*/
+}
+
+void Fish::reset(int x, int y, int w, int h) {
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    targetX = x + w / 2;
+    targetY = y + h / 2;
+    angle = 0.0f;
+    flip = SDL_FLIP_NONE;
 }
 
 SDL_Rect Fish::getHeadRect() const {
@@ -91,10 +90,8 @@ void Fish::move(bool isKick) {
     const int bottomEdge = worldH; //day duoi co th cham day
     if (rect.y < topLimit)              
         rect.y = topLimit;           
-    if (rect.y + rect.h > bottomEdge)   
+    if (rect.y + rect.h > bottomEdge)
         rect.y = bottomEdge - rect.h;
-    /*collisionRect.x = rect.x + (rect.w - collisionRect.w) / 2;
-    collisionRect.y = rect.y + (rect.h - collisionRect.h) / 2;*/
 }
 
 Fish::~Fish() {

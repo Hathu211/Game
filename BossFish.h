@@ -15,3 +15,4 @@ public:
 	void render(const SDL_Rect& cam); 
 	SDL_Rect getRectBoss() const { return rect; }
 };
+ 

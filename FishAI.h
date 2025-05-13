@@ -8,7 +8,6 @@ class FishAI {
 private:
     SDL_Renderer* renderer;
     SDL_Rect rect;
-    SDL_Rect collisionRect; //thu nho vung va cham
     SDL_Texture* textureAI;
     float vx, vy; 
     float angle; 
@@ -29,6 +28,5 @@ public:
     float getAngle() const { return angle; } 
     int getPointValue() const { return pointValue; }
     std::string getImagePath() const { return imagePathAI; }
-    const SDL_Rect& getCollisionRect() const { return collisionRect; }
 };
 

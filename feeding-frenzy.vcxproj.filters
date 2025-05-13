@@ -45,6 +45,9 @@
     <ClCompile Include="BossFish.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="const.h">
@@ -68,12 +71,12 @@
     <ClInclude Include="BossFish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\nen.png">
-      <Filter>assets</Filter>
-    </Image>
-    <Image Include="assets\fish.png">
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\bubble.png">
@@ -91,13 +94,19 @@
     <Image Include="assets\boss1000.png">
       <Filter>assets</Filter>
     </Image>
-    <Image Include="assets\cavang20.png">
-      <Filter>assets</Filter>
-    </Image>
     <Image Include="assets\camapbig.png">
       <Filter>assets</Filter>
     </Image>
     <Image Include="assets\camapsmall.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\menu.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\cavang20.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\fish.png">
       <Filter>assets</Filter>
     </Image>
   </ItemGroup>

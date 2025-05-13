@@ -12,9 +12,16 @@
 #include "Bubble.h"
 #include "Score.h"
 #include "BossFish.h"
+#include "Menu.h"
 
 class Game {
 public:
+	enum GameState { MENU , PLAYING};
+	GameState gameState; 
+	Menu* menu; 
+	int selectedOption; 
+	Mix_Chunk* clickSound; 
+
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 	bool running;
@@ -50,6 +57,7 @@ public:
 	bool pendingShark; 
 	Uint32 sharkSpawnTime; 
 	int pendingSharkX, pendingSharkY, pendingSharkW, pendingSharkH; 
+	bool sharkGrow = false;
 		//shark tam thoi
 	float pendingSharkDirection; 
 	int pendingSharkPointValue; 
@@ -60,7 +68,7 @@ public:
 	Mix_Chunk* eatFishSound;
 	Mix_Chunk* levelUpSound;
 	Mix_Chunk* gameOverSound;
-
+	bool isMusicOn = true; 
 
 	Game();
 	~Game();
