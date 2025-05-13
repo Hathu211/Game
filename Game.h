@@ -27,6 +27,10 @@ public:
 	bool running;
 	bool isKick = false;
 	Background* background; 
+	bool showEnding = false; 
+	bool isGameWin = false; 
+	Uint32 endingStartTime = 0; 
+	const Uint32 endingLife = 2000; 
 	Fish* fish;
 		//fishAI
 	std::vector<FishAI*> fishAI; 

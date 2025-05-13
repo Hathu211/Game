@@ -158,10 +158,12 @@
     <Image Include="assets\camapsmall.png" />
     <Image Include="assets\cavang20.png" />
     <Image Include="assets\fish.png" />
+    <Image Include="assets\game_over.png" />
     <Image Include="assets\level1Back.png" />
     <Image Include="assets\level2Back.png" />
     <Image Include="assets\menu.png" />
     <Image Include="assets\nen.png" />
+    <Image Include="assets\you_win.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\font.ttf" />

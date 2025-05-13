@@ -109,6 +109,12 @@
     <Image Include="assets\fish.png">
       <Filter>assets</Filter>
     </Image>
+    <Image Include="assets\game_over.png">
+      <Filter>assets</Filter>
+    </Image>
+    <Image Include="assets\you_win.png">
+      <Filter>assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\font.ttf">

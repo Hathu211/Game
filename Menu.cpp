@@ -32,7 +32,7 @@ void Menu::render(int ) {
 	}
 	if (this->selectedOption >= 0 && selectedOption < 3) {
 		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-		SDL_SetRenderDrawColor(renderer, 255, 255, 0, 128); // Hiệu ứng sáng vàng
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 10); // Hiệu ứng sáng vàng
 		SDL_RenderFillRect(renderer, &optionRect[selectedOption]);
 		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
 	}

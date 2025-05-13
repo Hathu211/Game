@@ -23,7 +23,7 @@ namespace score {
 		if (level == 2) {
 			if (imagePathAI == "assets/cavang20.png") return scoreCavang;
 			else if (imagePathAI == "assets/bachtuoc50.png") return scoreBachtuoc;
-			else if (imagePathAI == "assets/camapbig.png" || imagePathAI == "assets/camapsmall.png") {
+			else if (imagePathAI == "assets/camapsmall.png" /*|| imagePathAI == "assets/camapsmall.png"*/) {
 				return getRandomSharkScore();
 			}
 		}

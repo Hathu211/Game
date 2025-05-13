@@ -136,6 +136,7 @@ Game::Game() {
 }
 
 void Game::update() {
+    if (showEnding) return; 
     Uint32 now = SDL_GetTicks();
     if (now - lastSpawnTime >= spawnInterval) {
         lastSpawnTime = now;
@@ -175,15 +176,15 @@ void Game::update() {
             }
         }
         else if (currentLevel == 2) {
-            const char* fishImages[] = { "assets/cavang20.png", "assets/bachtuoc50.png", "assets/camapsmall.png", "assets/camapbig.png" };
-            int imageIndex = rand() % 4;
+            const char* fishImages[] = { "assets/cavang20.png", "assets/bachtuoc50.png", "assets/camapsmall.png" };
+            int imageIndex = rand() % 3;
             const char* fishImage = fishImages[imageIndex];
-            int pointValue = (imageIndex == 2 || imageIndex == 3) ? score::getRandomSharkScore() : score::getScoreFishAI(fishImage, currentLevel);
-            if (imageIndex == 2 || imageIndex == 3) {
+            int pointValue = (imageIndex == 2 ) ? score::getRandomSharkScore() : score::getScoreFishAI(fishImage, currentLevel);
+            if (imageIndex == 2 ) {
                 w = (pointValue >= 600) ? 230 : 140;
                 h = (pointValue >= 600) ? 230 : 140;
                 pendingShark = true;
-                sharkSpawnTime = now + 1200;
+                sharkSpawnTime = now + 1000;
                 pendingSharkX = x;
                 pendingSharkY = y;
                 pendingSharkW = w;
@@ -216,8 +217,9 @@ void Game::update() {
     int worldH = background->getHeight();
     const int topLimit = worldH - 550;
     const int bottomEdge = worldH;
-    const int bw = 100, bh = 102;
-    const float speed = 3.5f;
+    int bw = (currentLevel == 1) ? 100 : 170; 
+    int bh = (currentLevel == 1) ? 85 : 165; 
+    const float speed = 3.3f;
     int levelScore = (currentLevel == 1 ? 50 : 1000); //chon level de render image
     const char* bossImage = (currentLevel == 1 ? "assets/bachtuoc50.png" : "assets/boss1000.png");
     if (!bossSpawned && playerScore > levelScore) {
@@ -259,28 +261,37 @@ void Game::update() {
                 return;
             }
             else if (currentLevel == 2 && playerScore >= 2500) {
-                    fish->grow(1.0f);
-                    playerScore += 2500;
-                    delete b;
-                    it = bossFish.erase(it);
-                    return;
-                }
-                else {
-                    running = false; // boss mạnh hơn → game over
-                    if (isMusicOn) Mix_PlayChannel(-1, gameOverSound, 0); 
-                    return;
-                }
+                fish->grow(1.0f);
+                playerScore += 2500;
+                delete b;
+                it = bossFish.erase(it);
+                isGameWin = true;
+                showEnding = true;
+                endingStartTime = SDL_GetTicks();
+                return;
             }
-            else {
-                ++it;
+            else if ((currentLevel == 1 && playerScore < 100) || (currentLevel == 2 && playerScore < 2500)) {
+                isGameWin = false;
+                showEnding = true;
+                endingStartTime = SDL_GetTicks();
+                return;
             }
+            //else {
+            //        running = false; // boss mạnh hơn → game over
+            //        if (isMusicOn) Mix_PlayChannel(-1, gameOverSound, 0); 
+            //        return;
+            //    }
         }
+        else {
+            ++it;
+        }
+    }
         //lay Rect o headFish va xu ly va cham voi fishAI
-        for (auto ai = fishAI.begin(); ai != fishAI.end(); ) {
-            if (!(*ai)->update()) {
-                delete* ai;
-                ai = fishAI.erase(ai);
-                continue;
+    for (auto ai = fishAI.begin(); ai != fishAI.end(); ) {
+        if (!(*ai)->update()) {
+            delete* ai;
+            ai = fishAI.erase(ai);
+            continue;
             }
             else {
                 SDL_Rect aiRect = (*ai)->getRect();
@@ -293,7 +304,7 @@ void Game::update() {
                     int spawnY = intersection.y + intersection.h / 2;
                     int numBubbles;
                     int bubbleSize;
-                    bool isShark = ((*ai)->getImagePath() == "assets/camapsmall.png" || (*ai)->getImagePath() == "assets/camapbig.png");
+                    bool isShark = ((*ai)->getImagePath() == "assets/camapsmall.png");
                     if (isShark) {
                         numBubbles = 20 + (rand() % 6);
                         bubbleSize = 100;
@@ -325,7 +336,7 @@ void Game::update() {
                         }
                         else {
                             if (currentLevel != 2 || !sharkGrow) {
-                                fish->grow(1.4f);
+                                fish->grow(1.5f);
                                 sharkGrow = true;
                             }
                             if (isMusicOn) Mix_PlayChannel(-1, eatFishSound, 0);
@@ -454,6 +465,19 @@ void Game::render() {
                 }
             }
         }
+        if (showEnding) {
+            SDL_Texture* overlay = IMG_LoadTexture(renderer, isGameWin ? "assets/you_win.png" : "assets/game_over.png");
+            if (overlay) {
+                SDL_RenderCopy(renderer, overlay, nullptr, nullptr);
+                SDL_DestroyTexture(overlay);
+            }
+            if (SDL_GetTicks() - endingStartTime >= endingLife) {
+                gameState = MENU;
+                showEnding = false;
+            }
+            SDL_RenderPresent(renderer);
+            return;
+        }
     SDL_RenderPresent(renderer);
     }  
 }
@@ -504,12 +528,12 @@ void Game::nextLevel() {
         x = (edge == 0 ? 0 : worldW - w);
         y = topLimit + rand() % (bottomEdge - topLimit - h);
         directionAngle = (edge == 0 ? 0.0f : M_PI);
-        int pointValue = score::getRandomSharkScore(); // Định nghĩa pointValue
+        int pointValue = score::getRandomSharkScore(); 
         w = (pointValue >= 600) ? 230 : 140;
         h = (pointValue >= 600) ? 230 : 140;
         fishAI.push_back(new FishAI(x, y, w, h, renderer, "assets/camapsmall.png", directionAngle, 3.5f, score::getRandomSharkScore()));
         pendingShark = true;
-        sharkSpawnTime = SDL_GetTicks() + 2000; // Trì hoãn 2 giây
+        sharkSpawnTime = SDL_GetTicks() + 1200; 
         pendingSharkX = x;
         pendingSharkY = y;
         pendingSharkW = w - 100 ;
