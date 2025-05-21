@@ -10,7 +10,7 @@
 
 ## 🎮 Giới thiệu
 
-- **Tác giả: Bùi Thị Hà Thu - 24022737
+- **Tác giả:** Bùi Thị Hà Thu - 24022737
 - **Lớp:** K69I-IS4- Trường Đại học Công Nghệ - ĐHQGHN
 - **Môn học:** Lập trình nâng cao
 - **Ngôn ngữ:** C++
